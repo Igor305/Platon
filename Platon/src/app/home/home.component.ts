@@ -73,6 +73,10 @@ export class HomeComponent implements OnInit {
     this.viewportScroller.scrollToAnchor(elementId);
   }
 
+  async changeSumm(){
+    
+  }
+
   async changeInstitut(){
     for(let institution of this.institutions){
       if(institution.name == this.institut){

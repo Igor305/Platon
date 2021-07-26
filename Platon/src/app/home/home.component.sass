@@ -1,93 +1,99 @@
-.flex
+$color-white : #fff
+$color-black : #000
+$color-red : #A0132C
+$color-blue : #373A4D
+$color-yellow : #ffc600
+$color-yellow-white: rgb(255, 198, 0, .3)
+      
+.flexCount
+    position: relative
+    padding-top: 25%
     display: flex
-    
-.title
+    flex-wrap: wrap
+    justify-content: space-around
+
+.title  
     position: relative
     background-image: url('../../assets/title.png')
-    background-size: contain
+    background-position: center center
+    background-size: 100%
     background-repeat: no-repeat
-    height:1600px
-    width: 100%
 
 .addition
     position: relative
     background-image: url('../../assets/addition.png')
-    background-size: contain
+    background-size: 100%
     background-repeat: no-repeat
-    height:1500px
-    width: 100%
 
 .count
     position: relative
     background-image: url('../../assets/count.png')
-    background-size: contain
+    background-size: 100%
     background-repeat: no-repeat
-    height:1610px
-    width: 100%
 
 .platon
     position: relative
-    background-image: url('../../assets/Platon.png')
-    background-size: contain
-    background-repeat: no-repeat
-    height:500px
-    width: 100%
-
+    margin-top: 5%
+    margin-left: 25%
+    margin-bottom: 15%
+    height: 30%
+    width: 30%
 
 .titleBlock
     position: relative
-    top: 200px
-    left: 20%
+    margin-left: 20%
     height: 500px
     width: 500px
 
 .titleName
     position: relative
-    margin-left: 27%
+    padding-top: 15%
+    padding-left: 27%
     font-family: Lato
     font-size: 47px
-    color: #373A4D
+    color: $color-blue
 
 .titleText1
     position: relative
-    margin-top: 10%
+    margin-top: 50px
     margin-left: 25%
-    height: 96px
+    height: 60px
     width: 627px
     font-family: "Roboto"
     font-size: 24px
-    color: #373A4D
+    color: $color-blue
 
 .titleText2
     position: relative
-    margin-top: 10%
+    margin-top: 25px
     margin-left: 25%
     height: 84px
     width: 639px
     font-family: "Roboto"
     font-size: 24px
-    color: #373A4D
+    color: $color-blue
 
 .titleButton
     position: relative
-    margin-top: 15%
+    margin-top: 150px
     margin-left: 40%
+    margin-bottom: 37%
     height: 56px
     width: 328px
     font-family: "Roboto"
     font-size: 20px
-    color: #fff
-    background-color: #373A4D
+    color: $color-white
+    background-color: $color-blue
 
 .info1,.info2
     position: relative
-    margin-top: 10px
+    margin-top: 50px
     margin-left: 50px
     margin-right: 50px
     font-family: "Roboto"
     font-size: 18px
     font-weight: 600
-    color: #000
+    color: $color-black
 
 .additionalInfo1
     position: relative
@@ -97,7 +103,7 @@
     font-family: "Roboto"
     font-size: 18px
     font-weight: 600
-    color: #A0132C
+    color: $color-red
 
 .additionalInfo2
     position: relative
@@ -107,7 +113,7 @@
     font-family: "Roboto"
     font-size: 18px
     font-weight: 500
-    color: #000
+    color: $color-black
 
 .additionalInfo3
     position: relative
@@ -118,7 +124,7 @@
     font-size: 18px
     font-weight: 600
     text-decoration: underline
-    color: #A0132C
+    color: $color-red
 
 .additionalInfo4
     position: relative
@@ -127,8 +133,15 @@
     font-family: "Roboto"
     font-size: 18px
     font-weight: 600
-    color: #000
+    color: $color-black
 
+.additionalInfo5
+    position: relative
+    margin-top: 15px
+    font-family: "Roboto"
+    font-size: 18px
+    font-weight: 600
+    color: $color-red
 
 .detailButton
     position: relative
@@ -138,8 +151,8 @@
     width: 328px
     font-family: "Roboto"
     font-size: 18px
-    color: #fff
-    background-color: #373A4D
+    color: $color-white
+    background-color: $color-blue
 
 .detailButtonClose
     position: relative
@@ -149,27 +162,65 @@
     width: 328px
     font-family: "Roboto"
     font-size: 18px
-    color: #fff
-    background-color: #373A4D
+    color: $color-white
+    background-color: $color-blue
 
 .video
     position: relative
     margin-top: 1%
-    margin-left: 10px
-    margin-right: 10px
 
 .footer
     display: flex
+    flex-wrap: wrap
     position: relative
     margin-top: 5%
-    margin-left: 40%
+    margin-left: 30%
 
-.footerInfo
+.footerPhone
     position: relative
     font-family: "Roboto"
     font-size: 18px
     font-weight: 500
-    color: #000
+    color: $color-black
+
+.footerInfo
+    position: relative
+    padding-top: 40px
+    margin-top: 40px
+    margin-left: 40px
+    margin-right: 40px
+    padding-bottom: 40px
+    border-radius: 15px
+    background-color: $color-yellow-white
+
+.flexResult
+    position: relative
+    margin-top: 5%
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+
+.summResult,.bidResult,.totalCostResult,.overpaymentResult
+    position: relative
+    margin-top: 3%
+    padding-top: 3%
+    background-color: $color-yellow
+    height: 120px
+    width: 300px
+    border-radius: 5px
+
+.resultInfo, .resultValue
+    position: absolute
+    width: 100%
+    text-align: center
+    font-family: "Roboto"
+    font-size: 18px
+    font-weight: 600
+    color: $color-black
+
+.resultValue
+    font-size: 34px
+    top: 55%
 
 .phone
     position: relative
@@ -187,13 +238,13 @@ mat-slider
     width: 80%
 
 ::ng-deep .mat-accent .mat-slider-thumb 
-    background-color: #FFC600
+    background-color: $color-yellow
 
 ::ng-deep .mat-accent .mat-slider-thumb-label 
-    background-color: #FFC600
+    background-color: $color-yellow
  
 ::ng-deep .mat-accent .mat-slider-track-fill 
-    background-color: #FFC600
+    background-color: $color-yellow
 
 ::ng-deep .mat-slider-wrapper 
 
@@ -203,3 +254,386 @@ mat-slider
         height: 50px
         top: -62px
         right: -25px
+
+@media screen and ( max-width: 2100px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 18%
+        padding-left: 15%
+        font-size: 65px
+    .titleText1
+        margin-top: 145px
+        margin-left: 10%
+        font-size: 24px
+        width: 800px
+    .titleText2
+        margin-top: 35px
+        margin-left: 10%
+        height: 50px
+        font-size: 24px
+        width: 800px
+    .titleButton
+        margin-top: 5%
+        margin-left: 40%
+        margin-bottom: 25%
+        height: 35px
+        width: 350px
+        font-size: 24px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 33%
+        height: 35px
+        width: 410px
+        font-size: 24px
+
+@media screen and ( max-width: 1500px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 20%
+        padding-left: 15%
+        font-size: 58px
+    .titleText1
+        margin-top: 45px
+        margin-left: 10%
+        font-size: 24px
+        width: 800px
+    .titleText2
+        margin-top: 35px
+        margin-left: 10%
+        height: 50px
+        font-size: 24px
+        width: 800px
+    .titleButton
+        margin-top: 5%
+        margin-left: 40%
+        margin-bottom: 25%
+        height: 35px
+        width: 350px
+        font-size: 24px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 33%
+        height: 35px
+        width: 410px
+        font-size: 24px
+
+
+@media screen and ( max-width: 1200px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 20%
+        padding-left: 15%
+        font-size: 33px
+    .titleText1
+        margin-top: 45px
+        margin-left: 10%
+        font-size: 22px
+        width: 800px
+    .titleText2
+        margin-top: 35px
+        margin-left: 10%
+        height: 50px
+        font-size: 22px
+        width: 800px
+    .titleButton
+        margin-top: 5%
+        margin-left: 40%
+        margin-bottom: 25%
+        height: 35px
+        width: 250px
+        font-size: 19px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 33%
+        height: 35px
+        width: 310px
+        font-size: 19px
+
+@media screen and ( max-width: 1050px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 20%
+        padding-left: 15%
+        font-size: 35px
+    .titleText1
+        margin-top: 15px
+        margin-left: 10%
+        font-size: 19px
+        width: 500px
+    .titleText2
+        margin-top: 25px
+        margin-left: 10%
+        height: 50px
+        font-size: 19px
+        width: 500px
+    .titleButton
+        margin-top: 5%
+        margin-left: 30%
+        margin-bottom: 25%
+        height: 35px
+        width: 250px
+        font-size: 19px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 33%
+        height: 35px
+        width: 310px
+        font-size: 19px
+
+@media screen and ( max-width: 850px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 12%
+        padding-left: 15%
+        font-size: 25px
+    .titleText1
+        margin-top: 15px
+        margin-left: 10%
+        font-size: 18px
+        width: 500px
+    .titleText2
+        margin-top: 25px
+        margin-left: 10%
+        height: 50px
+        font-size: 18px
+        width: 500px
+    .titleButton
+        margin-top: 5%
+        margin-left: 30%
+        margin-bottom: 25%
+        height: 35px
+        width: 250px
+        font-size: 18px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 30%
+        height: 35px
+        width: 260px
+        font-size: 16px
+
+@media screen and ( max-width: 750px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 12%
+        padding-left: 15%
+        font-size: 25px
+    .titleText1
+        margin-top: 15px
+        margin-left: 10%
+        font-size: 15px
+        width: 350px
+    .titleText2
+        margin-top: 25px
+        margin-left: 10%
+        height: 50px
+        font-size: 15px
+        width: 300px
+    .titleButton
+        margin-top: 15%
+        margin-left: 30%
+        margin-bottom: 10%
+        height: 35px
+        width: 250px
+        font-size: 15px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 30%
+        height: 35px
+        width: 260px
+        font-size: 15px
+
+@media screen and ( max-width: 550px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 12%
+        padding-left: 15%
+        font-size: 25px
+    .titleText1
+        margin-top: 15px
+        margin-left: 10%
+        font-size: 15px
+        width: 350px
+    .titleText2
+        margin-top: 25px
+        margin-left: 10%
+        height: 50px
+        font-size: 15px
+        width: 300px
+    .titleButton
+        margin-top: 15%
+        margin-left: 22%
+        margin-bottom: 0%
+        height: 35px
+        width: 250px
+        font-size: 15px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 22%
+        height: 35px
+        width: 260px
+        font-size: 15px
+
+@media screen and ( max-width: 480px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 12%
+        padding-left: 15%
+        font-size: 25px
+    .titleText1
+        margin-top: 15px
+        margin-left: 10%
+        font-size: 15px
+        width: 350px
+    .titleText2
+        margin-top: 25px
+        margin-left: 10%
+        height: 50px
+        font-size: 15px
+        width: 300px
+    .titleButton
+        margin-top: 15%
+        margin-left: 22%
+        margin-bottom: 0%
+        height: 35px
+        width: 250px
+        font-size: 15px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 22%
+        height: 35px
+        width: 260px
+        font-size: 15px
+
+@media screen and ( max-width: 400px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 15%
+        padding-left: 15%
+        font-size: 25px
+    .titleText1
+        display: none
+        font-size: 20px
+        width: 200px
+    .titleText2
+        margin-top: 5px
+        margin-left: 10%
+        height: 50px
+        font-size: 15px
+        width: 200px
+    .titleButton
+        margin-top: 15%
+        margin-left: 18%
+        margin-bottom: 15%
+        height: 35px
+        width: 250px
+        font-size: 15px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 18%
+        height: 35px
+        width: 260px
+        font-size: 15px
+
+@media screen and ( max-width: 360px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 9%
+        padding-left: 15%
+        font-size: 25px
+    .titleText1
+        display: none
+        font-size: 20px
+        width: 200px
+    .titleText2
+        margin-top: 5px
+        margin-left: 10%
+        height: 50px
+        font-size: 15px
+        width: 200px
+    .titleButton
+        margin-top: 15%
+        margin-left: 15%
+        margin-bottom: 5%
+        height: 35px
+        width: 250px
+        font-size: 15px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 15%
+        height: 35px
+        width: 260px
+        font-size: 15px
+
+@media screen and ( max-width: 320px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 9%
+        padding-left: 10%
+        font-size: 25px
+    .titleText1
+        display: none
+        font-size: 20px
+        width: 200px
+    .titleText2
+        margin-top: 5px
+        margin-left: 10%
+        height: 50px
+        font-size: 15px
+        width: 200px
+    .titleButton
+        margin-top: 15%
+        margin-left: 10%
+        margin-bottom: 0%
+        height: 35px
+        width: 250px
+        font-size: 15px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 7%
+        height: 35px
+        width: 260px
+        font-size: 15px
