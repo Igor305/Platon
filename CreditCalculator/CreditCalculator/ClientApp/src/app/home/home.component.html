@@ -1,0 +1,302 @@
+<div  class = "title" id ='title'>
+    <div class = "titleName">Кредитний калькулятор</div>
+    <div class = "titleText1">Допомагає легко і швидко розрахувати загальні витрати за сумою кредиту або позики. 
+        Це дозволить реально оцінити свої можливості, виконати зобов'язання і погасити борг.</div>
+    <div class = "titleText2">Знаючи кілька параметрів кредиту/позики, Ви можете підібрати зручні для вас умови.</div>
+    <button mat-raised-button color="primary" class ="titleButton" (click)="toCount('video')">Перейти до розрахунку</button>
+</div>
+
+<div>
+    <div class = "info1">БОРЖНИКОМ ВВАЖАЄТЬСЯ ОСОБА, ЯКЩО ВОНА НЕ ПРИСТУПИЛА ДО ВИКОНАННЯ ЗОБОВ’ЯЗАННЯ АБО НЕ ВИКОНАЛА ЙОГО У ВИЗНАЧЕНІ ТЕРМІНИ,
+        ВСТАНОВЛЕНІ ДОГОВОРОМ АБО ЗАКОНОМ (Ч.1 СТ.612 ЦИВІЛЬНОГО КОДЕКСУ УКРАЇНИ). 
+        <br><br>
+        ОТЖЕ, ДЛЯ НАЛЕЖНОГО ВИКОНАННЯ ЗОБОВ’ЯЗАННЯ НЕОБХІДНО ДОТРИМУВАТИСЬ ВИЗНАЧЕНИХ У ДОГОВОРІ ТЕРМІНІВ, ЗОКРЕМА, ЩОДО СПЛАТИ ВІДСОТКІВ, 
+        А ПРОСТРОЧЕННЯ ВИКОНАННЯ ЗОБОВ’ЯЗАННЯ Є ЙОГО ПОРУШЕННЯМ. НЕЗАЛЕЖНО ВІД ТОГО, ЧИ ДОГОВІР БУВ УКЛАДЕНИЙ ПИСЬМОВО ЧИ ЕЛЕКТРОННО.
+    </div>
+    <div *ngIf="isDetail == false">
+        <button mat-raised-button color="primary" class ="detailButton" (click)="toDetail('detail')">Розглянути докладніше</button>
+    </div>
+    <div *ngIf="isDetail == true">
+        <button mat-raised-button color="primary" class ="detailButton" (click)="toDetailClose('title')">Згорнути детальну інформацію</button>
+    </div>
+</div>
+
+<div *ngIf="isDetail == true">
+    <div id='detail'>     
+        <div class = "additionalInfo1">
+            КОЛИ ЗАБОВ'ЯЗАННЯ Є ПРОСТРОЧИНИМ?
+        </div>
+        <div class = "additionalInfo2">
+            Боржник вважається таким, що прострочив, якщо він <span class = additionalInfo5>не приступив</span> до виконання зобов’язання або <span class = additionalInfo5>не виконав його у строк</span>
+            , встановлений договором або законом (ч.1 ст.612 ЦК – Цивільного кодексу України).
+            <br>
+            Отже, для належного виконання зобов’язання необхідно дотримуватись визначених у договорі строків (термінів),
+            зокрема щодо сплати відсотків, а прострочення виконання зобов’язання є його порушенням.
+            Незалежно від того, чи договір був укладений письмово чи електронно.
+        </div>
+        <div class = "addition">
+        <div class = "additionalInfo1">
+            ЯКІ НАСЛІДКИ ПОРУШЕННЯ?
+        </div>
+        <div class = "additionalInfo2">
+            За загальним правилом, наслідки порушення можуть бути встановлені <span class = additionalInfo5>договором</span> або <span class = additionalInfo5>законом</span>.
+             Зокрема, сплата неустойки (п.3 ч.1 ст.611 ЦК України).
+        <br><br>
+            Неустойка – це грошова сума або інше майно, які боржник повинен передати кредиторові у разі порушення боржником зобов’язання
+             (ст. 549 ЦК України). Неустойка може бути двох видів:
+        </div>
+        <ul>
+            <li class = "additionalInfo2"> 
+                штраф – неустойка, що обчислюється у відсотках від суми невиконаного або неналежно виконаного зобов’язання;
+            </li>
+            <li class = "additionalInfo2"> 
+                пеня – неустойка, що обчислюється у відсотках від суми несвоєчасно виконаного грошового зобов’язання за кожен день прострочення виконання.
+            </li>
+        </ul>
+        <div class = "additionalInfo2" >
+            Штраф може застосовуватись до будь-якого порушення зобов’язання, а пеня тільки щодо прострочення виконання.
+            <br>
+            Важливо, що розмір неустойки:
+        </div>
+        <ul>
+            <li class = "additionalInfo2">
+                може бути встановлений законом і збільшений у договорі, якщо таке збільшення не заборонено законом;
+            </li>
+            <li class = "additionalInfo2">
+                може бути встановлений законом і зменшений у договорі, якщо таке збільшення не заборонено законом;
+            </li>
+            <li class = "additionalInfo2">
+                може бути зменшений за рішенням суду, якщо він значно перевищує розмір збитків, та за наявності інших обставин, які мають істотне значення.       
+            </li>
+        </ul>
+        <div class = "additionalInfo2">
+            Проценти на неустойку не нараховуються (ч.2 ст.550 ЦК України)
+        </div>
+
+        <div class = "additionalInfo1">
+            Тобто, зобов’язання з надання кредиту, його повернення та сплати процентів є основним, а зобов’язання зі сплати неустойки є додатковим до основного.
+        </div>
+        <div class = "additionalInfo2">
+            Однак законодавством обмежений розмір додаткового зобов’язання (неустойки).
+        </div>
+
+            <div class = "additionalInfo3">
+                ВІДПОВІДНО ДО ЗАКОНУ УКРАЇНИ “ПРО СПОЖИВЧЕ КРЕДИТУВАННЯ”
+            </div>
+            <div class = "additionalInfo4">
+                Розмір пені не може:
+            </div>
+            <ul>
+                <li class = "additionalInfo2">
+                    перевищувати подвійну облікову ставку Національного банку України, що діяла у період, за який сплачується пеня (станом на 22 червня 2021 року  не може перевищувати 15%);       
+                </li>
+                <li class = "additionalInfo2">
+                    бути більшим, ніж 15 відсотків суми простроченого платежу.
+                </li>
+            </ul>
+            <div class = "additionalInfo2">
+                Деякі договори з метою уникнення обмежень, встановлених законом, містять положення, про розмір % від суми заборгованості в день, а не від суми простроченого платежу. Це суперечить законодавству.
+            </div>
+            <div class = "additionalInfo4">
+                Сукупний розмір неустойки: 
+            </div>
+            <ul>
+                <li class = "additionalInfo2">
+                    не може перевищувати половини суми, отриманої споживачем за таким договором (тобто, загального розміру кредиту);
+                </li>
+                <li class = "additionalInfo2">
+                    не може бути збільшений за домовленістю сторін (ч. 2 ст. 21 Закону України “Про споживче кредитування”).
+                </li>
+            </ul>
+            <div class = "additionalInfo2">
+                <span class = "additionalInfo5">МІКРОКРИДИТИ</span> - це договір про споживчий кредит, загальний розмір кредиту за яким не перевищує розміру однієї мінімальної заробітної плати. 
+            </div>
+            <div class = "additionalInfo1">
+                СУКУПНА СУМА НЕУСТОЙКИ (ШТРАФ, ПЕНЯ) ТА ІНШИХ ПЛАТЕЖІВ ЗА ДОГОВОРОМ МІКРОКРИДИТУ:
+            </div>
+            <ul>
+                <li class = "additionalInfo2">
+                    не може перевищувати розміру подвійної суми, одержаної споживачем за таким договором, і не може бути збільшена за домовленістю сторін;          
+                </li>
+                <li class = "additionalInfo2">
+                    за порушення виконання споживачем зобов’язань за договором Мікрокредиту відсоткова ставка за кредитом, порядок її обчислення, порядок сплати процентів не можуть бути змінені у бік погіршення для споживача (ч. 3 ст. 21 Закону України “Про споживче кредитування”).
+                </li>
+            </ul>
+            <div class = "additionalInfo1">
+                Але варто звернути увагу, що дане обмеження по Мікрокредитах стосується лише позик, які оформлені після 8 січня 2021 року, коли набрав чинності Закон № 891-IX, що встановлює максимальну межу штрафів та пені.
+            </div>
+            <div class = "additionalInfo2">
+                Це означає, що для захисту своїх прав, у випадку нарахування надмірно великого розміру неустойки по Мікрокредитах, що оформлені до 08 січня 2021 року, Вам не вдасться застосувати наведені вище обмеження.
+                <br>
+                Натомість є можливість визнати розмір неустойки за кредитом (в тому числі Мікрокредитом) несправедливим, якщо розмір є більшим, ніж половина суми, яку Ви отримали у позику.
+                <br>
+                Пункт 5 ч.3 ст.18 Закону України «Про захист прав споживачів»: несправедливими є умови договору з приводу встановлення вимоги щодо сплати споживачем непропорційно великої суми компенсації (понад 50% вартості продукції – суми кредиту) у разі невиконання ним зобов’язань за договором.
+                <br>
+                Отже, якщо розмір неустойки за Вашим Мікрокредитом є більшим, ніж 50% суми, яку Ви позичили, такий розмір є несправедливим – відтак може бути оскарженим.
+                <br>
+            </div>
+            <div class = "additionalInfo1">
+                КОРИСТНІ РЕСУРСИ:
+            </div>
+            <div class = "additionalInfo2">
+                1)	Українське бюро кредитних історій – дає можливість безкоштовно переглянути Вашу кредитну історію: 
+                <br>
+                <a href="https://www.ubki.ua/credit-history-ua" target="_blank">https://www.ubki.ua/credit-history-ua</a>
+                <br>
+                <br>
+                2)	Єдиний реєстр боржників - дає можливість перевірити чи відкрите на Вас виконавче провадження:
+                <br>
+                <a href="https://erb.minjust.gov.ua/#/search-debtors" target="_blank">https://erb.minjust.gov.ua/#/search-debtors</a>
+            </div>
+            <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toDetailClose('title')">Згорнути детальну інформацію</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isCount == true">
+    <div class="video" id ='video'>
+        <video width=90% height=90% controls="controls">
+            <source src="../../assets/Credit_Rev1.mp4" type="video/mp4" />
+            Browser not supported
+        </video>
+    </div>
+    <div class = "count">
+        <div  id ='count' class = "flexCount">
+            <div class="summ">
+                <mat-form-field appearance="fill">
+                    <mat-label>СУМА ПОЗИКИ(ГРН):</mat-label>
+                    <input  type="number" [formControl]="summ" [errorStateMatcher]="matcher" [(ngModel)]='sum' matInput >
+                    <mat-error *ngIf="summ.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                    <mat-error *ngIf="summ.hasError('min')">
+                        Значення меньше нуля
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class = "institution">
+                <mat-form-field appearance="fill">
+                    <mat-label>ВИБІР УСТАНОВИ</mat-label>
+                    <mat-select [(ngModel)]="institut" (selectionChange)="changeInstitut()" >
+                        <mat-option *ngFor="let institution of institutions" [value]="institution.name">
+                        {{institution.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="isTypesInstitut">
+                <mat-form-field appearance="fill">
+                    <mat-label>ВИБІР ТИПУ УСТАНОВИ</mat-label>
+                    <mat-select [(ngModel)]="typesInstitution" (selectionChange)="changeTypeInstitut()">
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                        {{type.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="isTypesInstitut">
+                <div *ngIf='institut == ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput disabled type="number" >
+                    </mat-form-field>
+                </div>
+                <div *ngIf='institut != ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput value = {{bidToType}} disabled type="number" >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="!isTypesInstitut">              
+                <div *ngIf='institut == ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput disabled type="number" >
+                    </mat-form-field>
+                </div>
+                <div *ngIf='institut != "Свій вибір" && institut != ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput value = {{bid}} disabled type="number" >
+                    </mat-form-field>
+                </div>
+                <div *ngIf='institut == "Свій вибір"' class="bid">
+                    <mat-form-field  appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput type="number" [formControl]="rate" [errorStateMatcher]="matcher" >
+                        <mat-error *ngIf="rate.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="rate.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class = "additionalInfo2">
+            ТЕРМІН КРЕДИТУВАННЯ
+        </div>
+        <div>
+            <mat-slider [min] = "1" [max] = "365" [(ngModel)]="term"  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
+        </div>
+        <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toResult('result')">Розрахувати</button>
+        <img src="../../assets/Platon.png" class = "platon">
+    </div>
+    <div>
+        
+    </div>
+    <div *ngIf="isResult == true" id = 'result'>
+        <div class = "flexResult">
+            <div class = "summResult">
+                <div class = "resultInfo">СУМА ПОЗИКИ</div>
+                <div class = "resultValue">{{sum}}</div>
+            </div>
+            <div *ngIf="!isTypesInstitut" class = "bidResult">
+                <div class = "resultInfo">% СТАВКА РІЧНИХ</div>
+                <div class = "resultValue">{{bid}} %</div>
+            </div>
+            <div *ngIf="isTypesInstitut" class = "bidResult">
+                <div class = "resultInfo">% СТАВКА РІЧНИХ</div>
+                <div class = "resultValue">{{bidToType}} %</div>
+            </div>
+            <div class = "totalCostResult">
+                <div class = "resultInfo">ЗАГАЛЬНА ВАРТІСТЬ</div>
+                <div class = "resultValue">{{result}}</div>
+            </div>
+            <div class = "overpaymentResult">
+                <div class = "resultInfo">ПЕРЕПЛАТА</div>
+                <div class = "resultValue">{{overpayment}}</div>
+            </div>
+        </div>
+        <div class = "footerInfo">
+            <div class = "additionalInfo1">
+                ТИПОВИЙ ВИПАДОК:
+            </div>
+            <br>
+            <div class = "additionalInfo2">
+                ЯК ПРАВИЛО, БАГАТО ХТО НЕ ВСТИГАЄ СВОЄЧАСНО ВНЕСТИ ПЛАТІЖ.
+                <br>
+                В ЦЬОМУ РАЗІ, ЯКЩО ВИ ПРОСТРОЧИЛИ ДАТУ ВИПЛАТИ ХОЧАБ НА ДЕНЬ, ТО ВАМ ПОТРІБНО ПОВЕРНУТИ ВЖЕ НЕ <span class="footerSum">{{sum}}</span>, А <span class="footerSum">{{sumDelay}}</span> ГРН. БУДЬТЕ УВАЖНІ!
+            </div>
+        </div>
+        <div class = "additionalInfo2">
+            У РАЗІ ПРОСРОЧЕННЯ ЧЕРЕЗ ДЕКІЛЬКА ДНІВ ПІСЛЯ РОЗРАХУНКОВОЇ ДАТИ ВИПЛАТИ КРЕДИТУ, ЗАЗНАЧЕНОЇ В ДОГОВОРІ, ВАМ БУДЕ НАРАХОВАНА <span class = "additionalInfo5">ЗБІЛЬШЕНА</span> ПРОЦЕНТНА СТАВКА, ЯКА БУДЕ <span class = "additionalInfo5">НАРАХОВУВАТИСЬ ЩОДЕННО НА ТІЛО КРЕДИТУ.</span>    
+        </div>
+        <div class = "additionalInfo2">
+            КАЛЬКУЛЯТОР НЕ Є ПІДСТАВОЮ ДЛЯ ВИКОНАННЯ/НЕВИКОНАННЯ ФІНАНСОВИХ ЗОБОВ’ЯЗАНЬ.
+        </div>
+        <div class = "additionalInfo2">
+           РОЗРАХУНКИ ЗДІЙСНЮЮТЬСЯ, ВРАХОВУЮЧИ УЗАГАЛЬНЕНУ ІНФОРМАЦІЮ, ЗІБРАНУ З САЙТІВ МІКРОФІНАНСОВИХ ОРГАНІЗАЦІЙ. <span class = "additionalInfo5">НАГОЛОШУЄМО</span>, ДАНІ МІСТЯТЬ В СОБІ ЛИШ ІНФОРМАЦІЙНИЙ ХАРАКТЕР ТА НЕ ВРАХОВУЮТЬ ІНДИВІДУАЛЬНІ АБО Ж АКЦІЙНІ УМОВИ ВЗАЄМОДІЇ З ФІНАНСОВИМИ УСТАНОВАМИ.
+        </div>     
+        <div class = "footer">
+            <div class = "phone">
+            </div>
+            <div class = "footerPhone">
+                ВИНИКАЮТЬ ПИТАННЯ? ТЕЛЕФОНУЙ: +38(067)** ** ***
+            </div>
+        </div>        
+    </div>
+</div>

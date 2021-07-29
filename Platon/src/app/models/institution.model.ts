@@ -1,4 +1,8 @@
+import { TypeInstitutionModel } from "./type.model";
+
 export interface InstitutionModel{
     name?: string;
-    percent?: number;
+    bid?: number;
+    thereIsAType?: boolean;
+    types?: TypeInstitutionModel[];
 }

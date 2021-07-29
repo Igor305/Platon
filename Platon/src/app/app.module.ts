@@ -7,10 +7,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { ConfigComponent } from './config/config.component';
+import { ConfigModule } from './config/config.module';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'config', component: ConfigComponent}
 ]; 
 
 
@@ -23,6 +26,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HomeModule,
+    ConfigModule,
     RouterModule.forRoot(routes, {
       anchorScrolling: 'enabled',
     }),

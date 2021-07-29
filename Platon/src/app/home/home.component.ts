@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { InstitutionModel } from '../models/institution.model';
+import { TypeInstitutionModel } from '../models/type.model';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective| NgForm | null): boolean {
@@ -22,16 +23,39 @@ export class HomeComponent implements OnInit {
   isResult: boolean = false;
   isCount: boolean = false;
   isDetail: boolean = false;
+  isTypesInstitut: boolean = false;
+  overpayment?: number;
+  result?: number;
+  term?: number = 1;
+  sumDelay?: number;
+  sum?: number;
   institut: string = "";
-  percent?: number = 0;
+  bid?: number = 0;
+  bidToType?: number;
+  typesInstitution?: string;
+  types?: TypeInstitutionModel[] = [];
   institutions: InstitutionModel[] = [
     {
-      name : "Moneyveo",
-      percent : 42,
+      name : "MyCredit",
+      thereIsAType : true,
+
+      types : [ 
+        {
+          name : "30 днів",
+          bid : 726.35,
+          term : 30
+        },
+        {
+          name : "64 дні",
+          bid : 584,
+          term : 16
+        },
+      ]
     },
     {
-      name : "MyCredit",
-      percent : 25,
+      name : "Moneyveo",
+      bid : 25,
+      thereIsAType : false
     },
     {
       name: "Свій вибір"
@@ -72,23 +96,72 @@ export class HomeComponent implements OnInit {
     await this.sleep(300);
     this.viewportScroller.scrollToAnchor(elementId);
   }
+  
+  async changeInstitut(){
 
-  async changeSumm(){
-    
+    for(let institution of this.institutions){
+
+      if(institution.name == this.institut){
+
+        this.bid = institution.bid;
+
+        if(institution.thereIsAType == true){
+          this.isTypesInstitut = true;
+          this.types = institution.types;
+        }
+        else{
+          this.isTypesInstitut = false;
+        }
+      } 
+    }
   }
 
-  async changeInstitut(){
-    for(let institution of this.institutions){
-      if(institution.name == this.institut){
-        this.percent = institution.percent;
+  async changeTypeInstitut(){  
+
+    if (this.types != undefined){
+
+      for(let type of this.types){
+
+        if (type.name == this.typesInstitution){
+          this.bidToType = type.bid;
+        }
+
       }
     }
   }
 
   async toResult(elementId: string){
+
+    if (this.sum == undefined){
+      return;
+    }
     this.isResult = true;
     await this.sleep(1);
     this.viewportScroller.scrollToAnchor(elementId);
+
+    if (this.isTypesInstitut == true){
+
+      if (this.sum != undefined && this.bidToType != undefined && this.term != undefined){
+        
+        this.overpayment = Math.round(this.sum/100*(this.bidToType/365)*this.term);
+        this.result = this.sum + this.overpayment;
+
+        this.sumDelay = Math.round(this.sum+(this.sum/100*this.bidToType*this.term))
+        console.log(this.sumDelay)
+      }
+    }
+
+    if (this.isTypesInstitut == false){
+
+      if (this.sum != undefined && this.bid != undefined && this.term != undefined){
+
+        this.overpayment = Math.round(this.sum/100*(this.bid/365)*this.term);
+        this.result = this.sum + this.overpayment;
+       
+        this.sumDelay = Math.round(this.sum+(this.sum/100*this.bid*this.term))
+
+      }
+    }  
   }
 
   sleep(ms: number) {

@@ -3,7 +3,7 @@
     <div class = "titleText1">Допомагає легко і швидко розрахувати загальні витрати за сумою кредиту або позики. 
         Це дозволить реально оцінити свої можливості, виконати зобов'язання і погасити борг.</div>
     <div class = "titleText2">Знаючи кілька параметрів кредиту/позики, Ви можете підібрати зручні для вас умови.</div>
-    <button mat-raised-button color="primary" class ="titleButton" (click)="toCount('count')">Перейти до розрахунку</button>
+    <button mat-raised-button color="primary" class ="titleButton" (click)="toCount('video')">Перейти до розрахунку</button>
 </div>
 
 <div>
@@ -155,7 +155,7 @@
 
 <div *ngIf="isCount == true">
     <div class="video" id ='video'>
-        <video width=100% height=100% controls="controls">
+        <video width=90% height=90% controls="controls">
             <source src="../../assets/Credit_Rev1.mp4" type="video/mp4" />
             Browser not supported
         </video>
@@ -165,7 +165,7 @@
             <div class="summ">
                 <mat-form-field appearance="fill">
                     <mat-label>СУМА ПОЗИКИ(ГРН):</mat-label>
-                    <input  type="number" [formControl]="summ" [errorStateMatcher]="matcher" (selectionChange)="changeSumm()" matInput >
+                    <input  type="number" [formControl]="summ" [errorStateMatcher]="matcher" [(ngModel)]='sum' matInput >
                     <mat-error *ngIf="summ.hasError('required')">
                         Заповніть поле
                     </mat-error>
@@ -178,43 +178,69 @@
             <div class = "institution">
                 <mat-form-field appearance="fill">
                     <mat-label>ВИБІР УСТАНОВИ</mat-label>
-                    <mat-select [(ngModel)]="institut"  (selectionChange)="changeInstitut()" >
+                    <mat-select [(ngModel)]="institut" (selectionChange)="changeInstitut()" >
                         <mat-option *ngFor="let institution of institutions" [value]="institution.name">
                         {{institution.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div *ngIf='institut == ""' class="bid">
+            <div *ngIf="isTypesInstitut">
                 <mat-form-field appearance="fill">
-                    <mat-label>СТАВКА РІЧНИХ %</mat-label>
-                    <input matInput disabled type="number" >
+                    <mat-label>ВИБІР ТИПУ УСТАНОВИ</mat-label>
+                    <mat-select [(ngModel)]="typesInstitution" (selectionChange)="changeTypeInstitut()">
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                        {{type.name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
-            <div *ngIf='institut != "Свій вибір" && institut != ""' class="bid">
-                <mat-form-field appearance="fill">
-                    <mat-label>СТАВКА РІЧНИХ %</mat-label>
-                    <input matInput value = {{percent}} disabled type="number" >
-                </mat-form-field>
+            <div *ngIf="isTypesInstitut">
+                <div *ngIf='institut == ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput disabled type="number" >
+                    </mat-form-field>
+                </div>
+                <div *ngIf='institut != ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput value = {{bidToType}} disabled type="number" >
+                    </mat-form-field>
+                </div>
             </div>
-            <div *ngIf='institut == "Свій вибір"' class="bid">
-                <mat-form-field  appearance="fill">
-                    <mat-label>СТАВКА РІЧНИХ %</mat-label>
-                    <input matInput type="number" [formControl]="rate" [errorStateMatcher]="matcher" >
-                    <mat-error *ngIf="rate.hasError('required')">
-                        Заповніть поле
-                    </mat-error>
-                    <mat-error *ngIf="rate.hasError('min')">
-                        Значення меньше нуля
-                    </mat-error>
-                </mat-form-field>
+            <div *ngIf="!isTypesInstitut">              
+                <div *ngIf='institut == ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput disabled type="number" >
+                    </mat-form-field>
+                </div>
+                <div *ngIf='institut != "Свій вибір" && institut != ""' class="bid">
+                    <mat-form-field appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput value = {{bid}} disabled type="number" >
+                    </mat-form-field>
+                </div>
+                <div *ngIf='institut == "Свій вибір"' class="bid">
+                    <mat-form-field  appearance="fill">
+                        <mat-label>СТАВКА РІЧНИХ %</mat-label>
+                        <input matInput type="number" [formControl]="rate" [errorStateMatcher]="matcher" >
+                        <mat-error *ngIf="rate.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="rate.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
         <div class = "additionalInfo2">
             ТЕРМІН КРЕДИТУВАННЯ
         </div>
         <div>
-            <mat-slider [min] = "1" [max] = "365"  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
+            <mat-slider [min] = "1" [max] = "365" [(ngModel)]="term"  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
         </div>
         <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toResult('result')">Розрахувати</button>
         <img src="../../assets/Platon.png" class = "platon">
@@ -226,17 +252,23 @@
         <div class = "flexResult">
             <div class = "summResult">
                 <div class = "resultInfo">СУМА ПОЗИКИ</div>
-                <div class = "resultValue">456</div>
+                <div class = "resultValue">{{sum}}</div>
             </div>
-            <div class = "bidResult">
+            <div *ngIf="!isTypesInstitut" class = "bidResult">
                 <div class = "resultInfo">% СТАВКА РІЧНИХ</div>
-                <div class = "resultValue">{{percent}} %</div>
+                <div class = "resultValue">{{bid}} %</div>
+            </div>
+            <div *ngIf="isTypesInstitut" class = "bidResult">
+                <div class = "resultInfo">% СТАВКА РІЧНИХ</div>
+                <div class = "resultValue">{{bidToType}} %</div>
             </div>
             <div class = "totalCostResult">
                 <div class = "resultInfo">ЗАГАЛЬНА ВАРТІСТЬ</div>
+                <div class = "resultValue">{{result}}</div>
             </div>
             <div class = "overpaymentResult">
                 <div class = "resultInfo">ПЕРЕПЛАТА</div>
+                <div class = "resultValue">{{overpayment}}</div>
             </div>
         </div>
         <div class = "footerInfo">
@@ -247,7 +279,7 @@
             <div class = "additionalInfo2">
                 ЯК ПРАВИЛО, БАГАТО ХТО НЕ ВСТИГАЄ СВОЄЧАСНО ВНЕСТИ ПЛАТІЖ.
                 <br>
-                В ЦЬОМУ РАЗІ, ЯКЩО ВИ ПРОСТРОЧИЛИ ДАТУ ВИПЛАТИ ХОЧАБ НА ДЕНЬ, ТО ВАМ ПОТРІБНО ПОВЕРНУТИ ВЖЕ НЕ 
+                В ЦЬОМУ РАЗІ, ЯКЩО ВИ ПРОСТРОЧИЛИ ДАТУ ВИПЛАТИ ХОЧАБ НА ДЕНЬ, ТО ВАМ ПОТРІБНО ПОВЕРНУТИ ВЖЕ НЕ <span class="footerSum">{{sum}}</span>, А <span class="footerSum">{{sumDelay}}</span> ГРН. БУДЬТЕ УВАЖНІ!
             </div>
         </div>
         <div class = "additionalInfo2">
