@@ -1,0 +1,68 @@
+<div  class = "title" id ='title'>
+    <div class ="description"> Режим конфігурації Кредиторів</div>
+    <div>
+        <div>
+
+        </div>
+        <div class = "formPost">
+            <mat-tab-group>
+                <mat-tab label="Редагувати">Редагувати  </mat-tab>
+                <mat-tab label="Додати">
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть назву кредитора</mat-label>
+                        <input matInput [(ngModel)]="name">
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть сумму кредиту</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть термін кредиту</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть відсоткову ставку</mat-label>
+                        <input matInput [(ngModel)]="bid">
+                    </mat-form-field>
+                    <div *ngIf="isType">
+                        <mat-tab-group>
+                            <mat-tab label="Додати тип"> 
+                                <mat-form-field class="formNameCreditor" appearance="fill">
+                                    <mat-label>Введіть назву типу</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
+                                <mat-form-field class="formNameCreditor" appearance="fill">
+                                    <mat-label>Введіть максимальну суму кредиту</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
+                                <mat-form-field class="formNameCreditor" appearance="fill">
+                                    <mat-label>Введіть максимальний термін кредиту</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
+                                <mat-form-field class="formNameCreditor" appearance="fill">
+                                    <mat-label>Введіть відсоткову ставку</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                    <div>
+                        <button mat-stroked-button color="warn" class ="buttonDelete" (click)="addCreditor()">Додати</button>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Видалити">
+                    <div>
+                        <mat-form-field class="formNameCreditor" appearance="fill">
+                            <mat-label>Введіть назву кредитора</mat-label>
+                            <input matInput [(ngModel)]="name">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                    <button mat-stroked-button color="warn" class ="buttonDelete" (click)="deleteType()">Видалити</button>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
+{{result}}

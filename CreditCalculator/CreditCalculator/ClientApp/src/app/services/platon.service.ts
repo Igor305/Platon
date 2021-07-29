@@ -18,7 +18,7 @@ export class PlatonService {
     return creditors;
   }
 
-  public async addCreditors(creditorModel: CreditorModel){
+  public async addCreditor(creditorModel: CreditorModel){
     let creditors = await this.http.post<ResponseModel>('/api/creditors', creditorModel).toPromise();
     console.log(creditors);
 
@@ -32,7 +32,7 @@ export class PlatonService {
     return creditors;
   }
 
-  public async delete(name: string){
+  public async deleteCreditor(name: string){
     let creditors = await this.http.delete<ResponseModel>('/api/creditors?name=' + name).toPromise();
     console.log(creditors);
 

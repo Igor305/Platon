@@ -40,14 +40,14 @@ namespace BusinessLogicLayer.Services
                     if (creditorModel.Name == creditor.Name)
                     {
                         responseModel.Status = false;
-                        responseModel.Message = "Кредитор з такою назвою вже існує";
+                        responseModel.Message = $"Кредитор {creditorModel.Name} назвою вже існує";
                         return responseModel;
                     }
                 }
 
                 creditorModels.Add(creditorModel);
                 responseModel.Status = true;
-                responseModel.Message = "successfully";
+                responseModel.Message = $"Кредитор {creditorModel.Name} успішно доданий";
             }
             catch(Exception e)
             {
@@ -98,12 +98,14 @@ namespace BusinessLogicLayer.Services
                 if(creditorModel == null)
                 {
                     responseModel.Status = false;
-                    responseModel.Message = "Введена назва не існує";
+                    responseModel.Message = $"Кредитор {name} не існує";
+
+                    return responseModel;
                 }
 
                 creditorModels.Remove(creditorModel);
                 responseModel.Status = true;
-                responseModel.Message = "successfully";
+                responseModel.Message = $"Кредитор {creditorModel.Name} успішно видалений";
             }
             catch(Exception e)
             {

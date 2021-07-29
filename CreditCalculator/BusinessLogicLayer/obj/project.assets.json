@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\i.talavyria\\Desktop\\project\\CreditCalculator\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
+      "projectUniqueName": "C:\\Users\\i.talavyria\\Desktop\\project\\Platon\\CreditCalculator\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
       "projectName": "BusinessLogicLayer",
-      "projectPath": "C:\\Users\\i.talavyria\\Desktop\\project\\CreditCalculator\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
+      "projectPath": "C:\\Users\\i.talavyria\\Desktop\\project\\Platon\\CreditCalculator\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
       "packagesPath": "C:\\Users\\i.talavyria\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\i.talavyria\\Desktop\\project\\CreditCalculator\\BusinessLogicLayer\\obj\\",
+      "outputPath": "C:\\Users\\i.talavyria\\Desktop\\project\\Platon\\CreditCalculator\\BusinessLogicLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\i.talavyria\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -5,9 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeModule } from './home/home.module';
+import { ConfigModule } from './config/config.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { ConfigComponent } from './config/config.component';
 
 
 @NgModule({
@@ -20,8 +22,10 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
     HomeModule,
+    ConfigModule,
     RouterModule.forRoot([
-    { path: '', component: HomeComponent, pathMatch: 'full' }
+    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: 'config', component: ConfigComponent, pathMatch: 'full' }
 ], { relativeLinkResolution: 'legacy' }),
     BrowserAnimationsModule
   ],
