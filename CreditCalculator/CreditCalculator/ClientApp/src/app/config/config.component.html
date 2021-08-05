@@ -1,28 +1,328 @@
 <div  class = "title" id ='title'>
     <div class ="description"> Режим конфігурації Кредиторів</div>
     <div>
-        <div>
-
+        <div *ngFor="let cr of creditors" class = "creditors">
+            <div class ="nameCreditor">
+                {{cr.name}}
+            </div>
+            <div *ngFor="let type of cr.typeCreditorModels" class="typeCreditor">
+                <div class ="flex">
+                    <div class ="nameTypeCreditor">
+                        {{type.name}}
+                    </div>
+                    <div>
+                        <button mat-raised-button color="primary" class ="buttonUpdateTypeCreditor" (click)="openMenuUpdateTypeCreditor(cr.name,type.name)">Редагувати</button>
+                        <button mat-raised-button color="warn" class ="buttonDelTypeCreditor" (click)="delTypeCreditor(cr.name,type.name)">Видалити</button>
+                    </div>
+                </div>
+                <div *ngIf="nameCreditor == cr.name && nameTypeCreditor == type.name && isTypeUpdate == true" class ="updateTypeCreditor">
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть назву типу</mat-label>
+                        <input matInput [(ngModel)]="nameTypeCreditorUpdate" [formControl]="nameType" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="nameType.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть мінімальну сумму кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="sumMinTypeCreditor" [formControl]="sumMinType" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="sumMinType.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="sumMinType.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть максимальну сумму кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="sumMaxTypeCreditor" [formControl]="sumMaxType" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="sumMaxType.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть мінімальний термін кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="termMinTypeCreditor" [formControl]="termMinType" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="termMinType.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="termMinType.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть максимальний термін кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="termMaxTypeCreditor" [formControl]="termMaxType" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="termMaxType.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть відсоткову місячну ставку</mat-label>
+                        <input type="number" matInput [(ngModel)]="bidTypeCreditor" [formControl]="bidType" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="bidType.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="bidType.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class ="flex">
+                <div>
+                    <button mat-raised-button color="primary" class ="buttonAddType" (click)="openMenuAddTypeCreditor(cr.name)">Додати тип кредиту</button>
+                </div>
+                <div>
+                    <button mat-raised-button color="warn" class ="buttonDelCreditor" (click)="delCreditor(cr.name)">Видалити організацію</button>
+                </div>
+            </div>
+            <div *ngIf="nameCreditor == cr.name && isAddType == true" class ="createTypeCreditor">
+                <mat-form-field class="formNameCreditor" appearance="fill">
+                    <mat-label>Введіть назву типу</mat-label>
+                    <input matInput [(ngModel)]="nameTypeCreditor" [formControl]="nameType" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="nameType.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="formNameCreditor" appearance="fill">
+                    <mat-label>Введіть мінімальну сумму кредиту</mat-label>
+                    <input type="number" matInput [(ngModel)]="sumMinTypeCreditor" [formControl]="sumMinType" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="sumMinType.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                    <mat-error *ngIf="sumMinType.hasError('min')">
+                        Значення меньше нуля
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="formNameCreditor" appearance="fill">
+                    <mat-label>Введіть максимальну сумму кредиту</mat-label>
+                    <input type="number" matInput [(ngModel)]="sumMaxTypeCreditor" [formControl]="sumMaxType" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="sumMaxType.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="formNameCreditor" appearance="fill">
+                    <mat-label>Введіть мінімальний термін кредиту</mat-label>
+                    <input type="number" matInput [(ngModel)]="termMinTypeCreditor" [formControl]="termMinType" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="termMinType.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                    <mat-error *ngIf="termMinType.hasError('min')">
+                        Значення меньше нуля
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="formNameCreditor" appearance="fill">
+                    <mat-label>Введіть максимальний термін кредиту</mat-label>
+                    <input type="number" matInput [(ngModel)]="termMaxTypeCreditor" [formControl]="termMaxType" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="termMaxType.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="formNameCreditor" appearance="fill">
+                    <mat-label>Введіть відсоткову місячну ставку</mat-label>
+                    <input type="number" matInput [(ngModel)]="bidTypeCreditor" [formControl]="bidType" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="bidType.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                    <mat-error *ngIf="bidType.hasError('min')">
+                        Значення меньше нуля
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button color="primary" class ="buttonAddCreditor" (click)="addTypeCreditor(cr.name)">Додати</button>
+                </div>
+            </div>
         </div>
-        <div class = "formPost">
+        <button mat-raised-button color="primary" class ="buttonOpenMenuAddCreditor" (click)="openMenuAddCreditor()">Додати організацію</button>
+        <div *ngIf="isAdd" class = "addCreditor">
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть назву кредитора</mat-label>
+                <input matInput [(ngModel)]="nameCreditor" [formControl]="name" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="name.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть назву типу кредитора</mat-label>
+                <input matInput [(ngModel)]="nameTypeCreditor" [formControl]="nameType" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="nameType.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть мінімальну сумму кредиту</mat-label>
+                <input type="number" matInput [(ngModel)]="sumMinCreditor" [formControl]="sumMin" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="sumMin.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+                <mat-error *ngIf="sumMin.hasError('min')">
+                    Значення меньше нуля
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть максимальну сумму кредиту</mat-label>
+                <input type="number" matInput [(ngModel)]="sumMaxCreditor" [formControl]="sumMax" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="sumMax.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть мінімальний термін кредиту</mat-label>
+                <input type="number" matInput [(ngModel)]="termMinCreditor" [formControl]="termMin" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="termMin.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+                <mat-error *ngIf="termMin.hasError('min')">
+                    Значення меньше нуля
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть максимальний термін кредиту</mat-label>
+                <input type="number" matInput [(ngModel)]="termMaxCreditor" [formControl]="termMax" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="termMax.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="formNameCreditor" appearance="fill">
+                <mat-label>Введіть відсоткову місячну ставку</mat-label>
+                <input type="number" matInput [(ngModel)]="bidCreditor" [formControl]="bid" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="bid.hasError('required')">
+                    Заповніть поле
+                </mat-error>
+                <mat-error *ngIf="bid.hasError('min')">
+                    Значення меньше нуля
+                </mat-error>
+            </mat-form-field>
+            <div>
+                <button mat-raised-button color="primary" class ="buttonAddCreditor" (click)="addCreditor()">Додати</button>
+            </div>
+        </div>
+
+        <!--<div class = "formPost">
             <mat-tab-group>
-                <mat-tab label="Редагувати">Редагувати  </mat-tab>
+                <mat-tab label="Редагувати">
+                    <div class = "creditor">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Вибір кредитора</mat-label>
+                            <mat-select [(ngModel)]="nameCreditor">
+                                <mat-option *ngFor="let  creditor of creditors" [value]=" creditor.name">
+                                {{creditor.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div>
+                            <button mat-stroked-button color="warn" class ="buttonAddType" (click)="addTypeCreditor()">Додати тип кредиту</button>
+                        </div>
+                        <div *ngIf="isAddType">
+                            <mat-form-field class="formNameCreditor" appearance="fill">
+                                <mat-label>Введіть назву типу</mat-label>
+                                <input matInput [(ngModel)]="nameTypeCreditor" [formControl]="nameType" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="nameType.hasError('required')">
+                                    Заповніть поле
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="formNameCreditor" appearance="fill">
+                                <mat-label>Введіть мінімальну сумму кредиту</mat-label>
+                                <input type="number" matInput [(ngModel)]="sumMinTypeCreditor" [formControl]="sumMinType" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="sumMinType.hasError('required')">
+                                    Заповніть поле
+                                </mat-error>
+                                <mat-error *ngIf="sumMinType.hasError('min')">
+                                    Значення меньше нуля
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="formNameCreditor" appearance="fill">
+                                <mat-label>Введіть максимальну сумму кредиту</mat-label>
+                                <input type="number" matInput [(ngModel)]="sumMaxTypeCreditor" [formControl]="sumMaxType" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="sumMaxType.hasError('required')">
+                                    Заповніть поле
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="formNameCreditor" appearance="fill">
+                                <mat-label>Введіть мінімальний термін кредиту</mat-label>
+                                <input type="number" matInput [(ngModel)]="termMinTypeCreditor" [formControl]="termMinType" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="termMinType.hasError('required')">
+                                    Заповніть поле
+                                </mat-error>
+                                <mat-error *ngIf="termMinType.hasError('min')">
+                                    Значення меньше нуля
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="formNameCreditor" appearance="fill">
+                                <mat-label>Введіть максимальний термін кредиту</mat-label>
+                                <input type="number" matInput [(ngModel)]="termMaxTypeCreditor" [formControl]="termMaxType" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="termMaxType.hasError('required')">
+                                    Заповніть поле
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="formNameCreditor" appearance="fill">
+                                <mat-label>Введіть відсоткову ставку</mat-label>
+                                <input type="number" matInput [(ngModel)]="bidTypeCreditor" [formControl]="bidType" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="bidType.hasError('required')">
+                                    Заповніть поле
+                                </mat-error>
+                                <mat-error *ngIf="bidType.hasError('min')">
+                                    Значення меньше нуля
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button mat-stroked-button color="warn" class ="buttonDelType" (click)="delTypeCreditor()">Видалити тип кредиту</button>
+                        </div>
+                    </div>
+                </mat-tab>
                 <mat-tab label="Додати">
                     <mat-form-field class="formNameCreditor" appearance="fill">
                         <mat-label>Введіть назву кредитора</mat-label>
-                        <input matInput [(ngModel)]="name">
+                        <input matInput [(ngModel)]="nameCreditor" [formControl]="name" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="name.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="formNameCreditor" appearance="fill">
-                        <mat-label>Введіть сумму кредиту</mat-label>
-                        <input matInput>
+                        <mat-label>Введіть мінімальну сумму кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="sumMinCreditor" [formControl]="sumMin" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="sumMin.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="sumMin.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="formNameCreditor" appearance="fill">
-                        <mat-label>Введіть термін кредиту</mat-label>
-                        <input matInput>
+                        <mat-label>Введіть максимальну сумму кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="sumMaxCreditor" [formControl]="sumMax" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="sumMax.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть мінімальний термін кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="termMinCreditor" [formControl]="termMin" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="termMin.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="termMin.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="formNameCreditor" appearance="fill">
+                        <mat-label>Введіть максимальний термін кредиту</mat-label>
+                        <input type="number" matInput [(ngModel)]="termMaxCreditor" [formControl]="termMax" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="termMax.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="formNameCreditor" appearance="fill">
                         <mat-label>Введіть відсоткову ставку</mat-label>
-                        <input matInput [(ngModel)]="bid">
+                        <input type="number" matInput [(ngModel)]="bidCreditor" [formControl]="bid" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="bid.hasError('required')">
+                            Заповніть поле
+                        </mat-error>
+                        <mat-error *ngIf="bid.hasError('min')">
+                            Значення меньше нуля
+                        </mat-error>
                     </mat-form-field>
                     <div *ngIf="isType">
                         <mat-tab-group>
@@ -51,10 +351,14 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Видалити">
-                    <div>
-                        <mat-form-field class="formNameCreditor" appearance="fill">
-                            <mat-label>Введіть назву кредитора</mat-label>
-                            <input matInput [(ngModel)]="name">
+                    <div class = "creditor">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Вибір кредитора</mat-label>
+                            <mat-select [(ngModel)]="nameCreditor">
+                                <mat-option *ngFor="let  creditor of creditors" [value]=" creditor.name">
+                                {{creditor.name}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div>
@@ -62,7 +366,7 @@
                     </div>
                 </mat-tab>
             </mat-tab-group>
-        </div>
+        </div>-->
     </div>
+    <div class = "message">{{message}}</div>
 </div>
-{{result}}

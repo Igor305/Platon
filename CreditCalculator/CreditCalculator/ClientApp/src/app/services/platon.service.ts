@@ -13,29 +13,31 @@ export class PlatonService {
 
   public async getCreditors(){
     let creditors = await this.http.get<CreditorResponseModel>('/api/creditors').toPromise();
-    console.log(creditors);
 
     return creditors;
   }
 
   public async addCreditor(creditorModel: CreditorModel){
-    let creditors = await this.http.post<ResponseModel>('/api/creditors', creditorModel).toPromise();
-    console.log(creditors);
+    let creditor = await this.http.post<ResponseModel>('/api/creditors', creditorModel).toPromise();
 
-    return creditors;
+    return creditor;
   }
 
-  public async updateCreditors(creditorModel: CreditorModel){
-    let creditors = await this.http.put<ResponseModel>('/api/creditors', creditorModel).toPromise();
-    console.log(creditors);
+  public async addTypeCreditors(nameCreditor:string, creditorModel: CreditorModel){
+    let creditor = await this.http.post<ResponseModel>('/api/creditors/addTypeCreditor?nameCreditor=' + nameCreditor, creditorModel).toPromise();
 
-    return creditors;
+    return creditor;
+  }
+
+  public async delTypeCreditors(nameCreditor:string, nameTypeCreditor: string){
+    let creditor = await this.http.delete<ResponseModel>('/api/creditors/delTypeCreditor?nameCreditor=' + nameCreditor + '&&nameTypeCreditor=' + nameTypeCreditor).toPromise();
+
+    return creditor;
   }
 
   public async deleteCreditor(name: string){
-    let creditors = await this.http.delete<ResponseModel>('/api/creditors?name=' + name).toPromise();
-    console.log(creditors);
+    let creditor = await this.http.delete<ResponseModel>('/api/creditors?name=' + name).toPromise();
 
-    return creditors;
+    return creditor;
   }
 }

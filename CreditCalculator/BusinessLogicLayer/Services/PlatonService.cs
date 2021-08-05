@@ -59,32 +59,59 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public ResponseModel updateCreditor ( CreditorModel creditorModel )
+        public ResponseModel addTypeCreditor (string name, TypeCreditorModel typeCreditorModel)
         {
             ResponseModel responseModel = new ResponseModel();
-
             try
             {
+                CreditorModel creditorModel = creditorModels.Find(x => x.Name == name);
+
                 foreach (CreditorModel creditor in creditorModels)
                 {
-                    if (creditorModel.Name == creditor.Name)
+                    if(creditor.Name == name)
                     {
-                        creditor.Bid = creditorModel.Bid;
-                        creditor.ThereIsAType = creditorModel.ThereIsAType;
-                        creditor.typeCreditorModels = creditorModel.typeCreditorModels;
+                        creditor.typeCreditorModels.Add(typeCreditorModel);
                     }
                 }
+
                 responseModel.Status = true;
-                responseModel.Message = "successfully";
+                responseModel.Message = $"Тип {typeCreditorModel.Name} доданий кредитору {name} ";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 responseModel.Status = false;
                 responseModel.Message = e.Message;
             }
 
             return responseModel;
+        }
 
+        public ResponseModel delTypeCreditor(string nameCreditor, string nameTypeCreditor)
+        {
+            ResponseModel responseModel = new ResponseModel();
+
+            try
+            {               
+                CreditorModel creditorModel = creditorModels.Find(x => x.Name == nameCreditor);
+
+                foreach (CreditorModel creditor in creditorModels)
+                {
+                    if (creditor.Name == nameCreditor)
+                    {
+                        TypeCreditorModel typeCreditorModel = creditor.typeCreditorModels.Find(x => x.Name == nameTypeCreditor);
+                        creditor.typeCreditorModels.Remove(typeCreditorModel);                       
+                    }
+                }
+                responseModel.Status = true;
+                responseModel.Message = $"Тип {nameTypeCreditor} видалений у кредитора {nameCreditor} ";
+            }
+            catch (Exception e)
+            {
+                responseModel.Status = false;
+                responseModel.Message = e.Message;
+            }
+
+            return responseModel;
         }
 
         public ResponseModel deleteCreditor ( string name ) 

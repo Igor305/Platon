@@ -33,10 +33,18 @@ namespace CreditCalculator.Controllers
             return responseModel;
         }
 
-        [HttpPut]
-        public ResponseModel UpdateCreditor([FromBody] CreditorModel creditorModel)
+        [HttpPost("addTypeCreditor")]
+        public ResponseModel AddTypeCreditor([FromQuery] string nameCreditor, [FromBody] TypeCreditorModel typeCreditorModel)
         {
-            ResponseModel responseModel = _platonService.updateCreditor(creditorModel);
+            ResponseModel responseModel = _platonService.addTypeCreditor(nameCreditor, typeCreditorModel);
+
+            return responseModel;
+        }
+
+        [HttpDelete("delTypeCreditor")]
+        public ResponseModel DelTypeCreditor([FromQuery] string nameCreditor, [FromQuery] string nameTypeCreditor)
+        {
+            ResponseModel responseModel = _platonService.delTypeCreditor(nameCreditor, nameTypeCreditor);
 
             return responseModel;
         }

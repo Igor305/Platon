@@ -5,6 +5,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { CreditorModel } from '../models/creditor.model';
 import { TypeCreditorModel } from '../models/type.creditor.model';
 import { PlatonService } from '../services/platon.service';
+import { CreditorResponseModel } from '../models/response/creditor.response.model';
+import { ThrowStmt } from '@angular/compiler';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective| NgForm | null): boolean {
@@ -33,34 +35,9 @@ export class HomeComponent {
   bid?: number = 0;
   bidToType?: number;
   typesInstitution?: string;
+  creditorsModel?: CreditorResponseModel;
   types?: TypeCreditorModel[] = [];
-  institutions: CreditorModel[] = [
-    {
-      name : "MyCredit",
-      thereIsAType : true,
-
-      types : [ 
-        {
-          name : "30 днів",
-          bid : 726.35,
-          term : 30
-        },
-        {
-          name : "64 дні",
-          bid : 584,
-          term : 16
-        },
-      ]
-    },
-    {
-      name : "Moneyveo",
-      bid : 25,
-      thereIsAType : false
-    },
-    {
-      name: "Свій вибір"
-    }
-  ]
+  institutions: CreditorModel[] = []
 
   summ = new FormControl('', [
     Validators.required,
@@ -77,7 +54,14 @@ export class HomeComponent {
   constructor(private viewportScroller: ViewportScroller, private  platonService: PlatonService) { }
 
   async ngOnInit() {
-    await this.platonService.getCreditors();
+    await this.getCreditors();
+    //setInterval(() => this.getCreditors(), 1000);
+  }
+
+  async getCreditors(){
+    this.creditorsModel = await this.platonService.getCreditors();
+    this.institutions = this.creditorsModel.creditorModels;
+    console.log(this.institutions);
   }
 
   async toDetail(elementId: string) {
@@ -108,7 +92,7 @@ export class HomeComponent {
 
         if(institution.thereIsAType == true){
           this.isTypesInstitut = true;
-          this.types = institution.types;
+          this.types = institution.typeCreditorModels;
         }
         else{
           this.isTypesInstitut = false;
@@ -159,7 +143,7 @@ export class HomeComponent {
         this.overpayment = Math.round(this.sum/100*(this.bid/365)*this.term);
         this.result = this.sum + this.overpayment;
        
-        this.sumDelay = Math.round(this.sum+(this.sum/100*this.bid*this.term))
+        this.sumDelay = Math.round(this.sum+(this.sum/100*3*this.term))
 
       }
     }  

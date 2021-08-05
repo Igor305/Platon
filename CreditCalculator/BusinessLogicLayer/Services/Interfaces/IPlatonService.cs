@@ -7,7 +7,8 @@ namespace BusinessLogicLayer.Services.Interfaces
     {
         public CreditorResponseModel getCreditors();
         public ResponseModel addCreditor(CreditorModel creditorModel);
-        public ResponseModel updateCreditor(CreditorModel creditorModel);
+        public ResponseModel addTypeCreditor(string name, TypeCreditorModel typeCreditorModel);
+        public ResponseModel delTypeCreditor(string nameCreditor, string nameTypeCreditor);
         public ResponseModel deleteCreditor(string name);
 
     }
