@@ -4,7 +4,7 @@ $color-red : #A0132C
 $color-blue : #373A4D
 $color-yellow : #ffc600
 $color-yellow-white: rgb(255, 198, 0, .3)
-      
+
 .flexCount
     position: relative
     padding-top: 25%
@@ -147,6 +147,7 @@ $color-yellow-white: rgb(255, 198, 0, .3)
     position: relative
     margin-top: 10%
     margin-left: 40%
+    margin-bottom: 2%
     height: 56px
     width: 328px
     font-family: "Roboto"
@@ -179,6 +180,7 @@ $color-yellow-white: rgb(255, 198, 0, .3)
 
 .footerPhone
     position: relative
+    margin-bottom: 2%
     font-family: "Roboto"
     font-size: 18px
     font-weight: 500
@@ -203,15 +205,17 @@ $color-yellow-white: rgb(255, 198, 0, .3)
 
 .flexResult
     position: relative
+    margin-left: 40px
+    margin-right: 40px
     margin-top: 5%
     display: flex
     flex-wrap: wrap
-    justify-content: space-around
+    justify-content: space-between
 
 .summResult,.bidResult,.totalCostResult,.overpaymentResult
     position: relative
     margin-top: 3%
-    padding-top: 3%
+    padding-top: 1%
     background-color: $color-yellow
     height: 120px
     width: 300px
@@ -228,7 +232,7 @@ $color-yellow-white: rgb(255, 198, 0, .3)
 
 .resultValue
     font-size: 34px
-    top: 55%
+    top: 35%
 
 .phone
     position: relative
@@ -263,6 +267,41 @@ mat-slider
         top: -62px
         right: -25px
 
+@media screen and ( max-width: 2500px )
+    .titleBlock
+        position: relative
+        left: 20%
+        height: 500px
+        width: 500px
+    .titleName
+        padding-top: 18%
+        padding-left: 15%
+        font-size: 65px
+    .titleText1
+        margin-top: 145px
+        margin-left: 10%
+        font-size: 24px
+        width: 800px
+        height: 100px
+    .titleText2
+        margin-top: 35px
+        margin-left: 10%
+        height: 50px
+        font-size: 24px
+        width: 800px
+    .titleButton
+        margin-top: 5%
+        margin-left: 38%
+        margin-bottom: 25%
+        height: 35px
+        width: 350px
+        font-size: 24px
+    .detailButton, .detailButtonClose
+        margin-top: 5%
+        margin-left: 38%
+        height: 35px
+        width: 410px
+        font-size: 24px
 @media screen and ( max-width: 2100px )
     .titleBlock
         position: relative
@@ -278,6 +317,7 @@ mat-slider
         margin-left: 10%
         font-size: 24px
         width: 800px
+        height: 100px
     .titleText2
         margin-top: 35px
         margin-left: 10%
@@ -293,7 +333,7 @@ mat-slider
         font-size: 24px
     .detailButton, .detailButtonClose
         margin-top: 5%
-        margin-left: 33%
+        margin-left: 38%
         height: 35px
         width: 410px
         font-size: 24px
@@ -313,6 +353,7 @@ mat-slider
         margin-left: 10%
         font-size: 24px
         width: 800px
+        height: 100px
     .titleText2
         margin-top: 35px
         margin-left: 10%
@@ -383,6 +424,7 @@ mat-slider
         margin-left: 10%
         font-size: 19px
         width: 500px
+        height: 90px
     .titleText2
         margin-top: 25px
         margin-left: 10%
@@ -418,6 +460,7 @@ mat-slider
         margin-left: 10%
         font-size: 18px
         width: 500px
+        height: 80px
     .titleText2
         margin-top: 25px
         margin-left: 10%

@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../home/home.component';
 import { CreditorModel } from '../models/creditor.model';
 import { CreditorResponseModel } from '../models/response/creditor.response.model';
+import { TypeCreditorResponseModel } from '../models/response/type.creditor.response.model';
 import { TypeCreditorModel } from '../models/type.creditor.model';
 import { PlatonService } from '../services/platon.service';
 
@@ -15,13 +16,13 @@ export class ConfigComponent implements OnInit {
 
   isAdd: boolean = false;
   isTypeCreate: boolean = false;
+  isTypeUp: boolean = false;
   isTypeUpdate: boolean = false;
   isCreate: boolean = false;
   isAddType: boolean = false;
   isType : boolean = false;
   
   message?: string = "";
-  nameFirstTypeCreditor?: string;
 
   nameCreditor?: string;
   sumMinCreditor?: number;
@@ -30,7 +31,6 @@ export class ConfigComponent implements OnInit {
   termMaxCreditor?: number;
   bidCreditor?: number;
 
-  nameTypeCreditorUpdate?: string;
   nameTypeCreditor?: string;
   sumMinTypeCreditor?: number;
   sumMaxTypeCreditor?: number;
@@ -38,7 +38,15 @@ export class ConfigComponent implements OnInit {
   termMaxTypeCreditor?: number;
   bidTypeCreditor?: number;
 
+  nameTypeCreditorUpdate?: string;
+  sumMinTypeCreditorUpdate?: number;
+  sumMaxTypeCreditorUpdate?: number;
+  termMinTypeCreditorUpdate?: number;
+  termMaxTypeCreditorUpdate?: number;
+  bidTypeCreditorUpdate: number;
+
   creditorsModel?: CreditorResponseModel;
+  typeCreditorModel?: TypeCreditorResponseModel;
   creditors : CreditorModel[] = [];
   creditor : CreditorModel = {};
   typeCreditor : TypeCreditorModel = {};
@@ -135,8 +143,19 @@ export class ConfigComponent implements OnInit {
     
     if (!this.isTypeUpdate){
       this.isTypeUpdate = true;
+
       this.nameCreditor = nameCreditor;
       this.nameTypeCreditor = nameTypeCreditor;
+      
+      this.typeCreditorModel = await this.platonService.readTypeCreditor(nameCreditor,nameTypeCreditor);
+
+      this.nameTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.name;
+      this.sumMinTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.minSum;
+      this.sumMaxTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.maxSum;
+      this.termMinTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.minTerm;
+      this.termMaxTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.maxTerm;
+      this.bidTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.bid;
+
       return;
     }
 
@@ -147,6 +166,15 @@ export class ConfigComponent implements OnInit {
       }
       this.nameCreditor = nameCreditor;
       this.nameTypeCreditor = nameTypeCreditor;
+
+      this.typeCreditorModel = await this.platonService.readTypeCreditor(nameCreditor,nameTypeCreditor);
+
+      this.nameTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.name;
+      this.sumMinTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.minSum;
+      this.sumMaxTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.maxSum;
+      this.termMinTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.minTerm;
+      this.termMaxTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.maxTerm;
+      this.bidTypeCreditorUpdate = this.typeCreditorModel.typeCreditorModel.bid;
       return;
     }
   }
@@ -163,8 +191,11 @@ export class ConfigComponent implements OnInit {
       this.typeCreditor.maxTerm = this.termMaxTypeCreditor;
       this.typeCreditor.bid = this.bidTypeCreditor;
   
-      let result = await this.platonService.addTypeCreditors(nameCreditor, this.typeCreditor);
+      let result = await this.platonService.addTypeCreditor(nameCreditor, this.typeCreditor);
       this.message = result.message; 
+
+      this.isAddType = false;
+      
       await this.getCreditors();
     }
   }
@@ -194,8 +225,6 @@ export class ConfigComponent implements OnInit {
 
       this.creditor.typeCreditorModels.push(this.typeCreditor);
 
-      console.log(this.creditor);
-
       let result = await this.platonService.addCreditor(this.creditor);
       this.message = result.message;    
 
@@ -205,8 +234,33 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  async updateTypeCreditor(nameCreditor : string, nameTypeCreditor : string){
+
+    await this.validatorUpdateTypeCreditor();
+
+    if (this.isTypeUp){
+
+      this.isTypeUp = false;
+
+      let typeCreditorModel: TypeCreditorModel = {};
+
+      typeCreditorModel.name = this.nameTypeCreditorUpdate
+      typeCreditorModel.minSum = this.sumMinTypeCreditorUpdate;
+      typeCreditorModel.maxSum = this.sumMaxTypeCreditorUpdate;
+      typeCreditorModel.minTerm = this.termMinTypeCreditorUpdate;
+      typeCreditorModel.maxTerm = this.termMaxTypeCreditorUpdate;
+      typeCreditorModel.bid = this.bidTypeCreditorUpdate; 
+
+      let result = await this.platonService.updateTypeCreditor(nameCreditor, nameTypeCreditor, typeCreditorModel);
+      this.message = result.message;
+      this.isTypeUpdate = false;
+
+      await this.getCreditors();
+    }
+  }
+
   async delTypeCreditor(nameCreditor,nameTypeCreditor){
-    let result = await this.platonService.delTypeCreditors(nameCreditor, nameTypeCreditor);
+    let result = await this.platonService.delTypeCreditor(nameCreditor, nameTypeCreditor);
     this.message = result.message;
     await this.getCreditors();
   }
@@ -221,6 +275,9 @@ export class ConfigComponent implements OnInit {
 
     if (this.nameCreditor == undefined){
       this.message = "Введіть назву кредитора"; 
+    }
+    else if (this.nameTypeCreditor == undefined){
+      this.message = "Введіть назву типу кредитора"; 
     }
     else if(this.sumMinCreditor == undefined){
       this.message = "Введіть мінімальну суму кредиту"; 
@@ -309,4 +366,49 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  async validatorUpdateTypeCreditor(){
+
+    if (this.nameTypeCreditorUpdate == undefined){
+      this.message = "Введіть назву типу кредитора"; 
+    }
+    else if(this.sumMinTypeCreditorUpdate == undefined){
+      this.message = "Введіть мінімальну суму кредиту"; 
+    }
+    else if(this.sumMinTypeCreditorUpdate < 0){
+      this.message = "Введіть додатне число, як мінімальну суму кредиту"; 
+    } 
+    else if(this.sumMaxTypeCreditorUpdate == undefined){
+      this.message = "Введіть максимальну суму кредиту"; 
+    }
+    else if(this.sumMaxTypeCreditorUpdate < 0){
+      this.message = "Введіть додатне число, як максимальну суму кредиту"; 
+    }
+    else if(this.termMinTypeCreditorUpdate == undefined){
+      this.message = "Введіть мінімальний термін кредиту"; 
+    }
+    else if(this.termMinTypeCreditorUpdate < 0){
+      this.message = "Введіть додатне число, як мінімальний термін кредиту"; 
+    }
+    else if(this.termMaxTypeCreditorUpdate == undefined){
+      this.message = "Введіть максимальний термін кредиту"; 
+    }
+    else if(this.termMaxTypeCreditorUpdate < 0){
+      this.message = "Введіть додатне число, як максимальний термін кредиту"; 
+    }
+    else if(this.bidTypeCreditorUpdate == undefined){
+      this.message = "Введіть відсоткову ставку"; 
+    }
+    else if(this.bidTypeCreditorUpdate < 0){
+      this.message = "Введіть додатне число, як відсоткову ставку"; 
+    }
+    else if(this.sumMinTypeCreditorUpdate > this.sumMaxTypeCreditorUpdate){
+      this.message = "Мінімальна сумма кредиту не може бути більшою за максимальну сумму!"; 
+    }
+    else if(this.termMinTypeCreditorUpdate > this.termMaxTypeCreditorUpdate){
+      this.message = "Мінімальний термін кредиту не може бути більшим за максимальний!"; 
+    }
+    else{
+      this.isTypeUp = true;
+    }
+  }
 }

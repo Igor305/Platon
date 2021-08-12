@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { CreditorModel } from '../models/creditor.model';
 import { TypeCreditorModel } from '../models/type.creditor.model';
 import { PlatonService } from '../services/platon.service';
 import { CreditorResponseModel } from '../models/response/creditor.response.model';
-import { ThrowStmt } from '@angular/compiler';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective| NgForm | null): boolean {
@@ -26,22 +25,34 @@ export class HomeComponent {
   isCount: boolean = false;
   isDetail: boolean = false;
   isTypesInstitut: boolean = false;
+
   overpayment?: number;
   result?: number;
+  summMin?: number = 1;
+  summMax?: number = 1000000000; 
+  termMin?: number = 1;
+  termMax?: number = 365;
   term?: number = 1;
   sumDelay?: number;
   sum?: number;
-  institut: string = "";
   bid?: number = 0;
+
+  resultSum?: number;
+  resultBid?: number;
+  resultBidToType?: number;
+
   bidToType?: number;
+  institut: string = "";
   typesInstitution?: string;
+
   creditorsModel?: CreditorResponseModel;
   types?: TypeCreditorModel[] = [];
   institutions: CreditorModel[] = []
 
   summ = new FormControl('', [
     Validators.required,
-    Validators.min(0)
+    (control: AbstractControl) => Validators.min(this.summMin)(control),
+    (control: AbstractControl) => Validators.max(this.summMax)(control)
   ]);
 
   rate = new FormControl('', [
@@ -55,13 +66,12 @@ export class HomeComponent {
 
   async ngOnInit() {
     await this.getCreditors();
-    //setInterval(() => this.getCreditors(), 1000);
+    setInterval(() => this.getCreditors(), 1000);
   }
 
   async getCreditors(){
     this.creditorsModel = await this.platonService.getCreditors();
     this.institutions = this.creditorsModel.creditorModels;
-    console.log(this.institutions);
   }
 
   async toDetail(elementId: string) {
@@ -86,16 +96,34 @@ export class HomeComponent {
 
     for(let institution of this.institutions){
 
+
       if(institution.name == this.institut){
 
-        this.bid = institution.bid;
-
-        if(institution.thereIsAType == true){
-          this.isTypesInstitut = true;
-          this.types = institution.typeCreditorModels;
+        if(institution.name == "Свій вибір"){
+          this.summMin = 1;
+          this.summMax = 1000000000;
+          this.termMin = 1;
+          this.termMax = 365;
         }
+        
         else{
-          this.isTypesInstitut = false;
+         
+          if(institution.typeCreditorModels.length > 1){
+            this.isTypesInstitut = true;
+            this.types = institution.typeCreditorModels;
+          }
+          else{
+
+            for(let type  of institution.typeCreditorModels){
+              this.summMin = type.minSum;
+              this.summMax = type.maxSum;
+              this.termMin = type.minTerm;
+              this.termMax = type.maxTerm;
+              this.bid = type.bid;   
+            }
+    
+            this.isTypesInstitut = false;
+          }
         }
       } 
     }
@@ -108,6 +136,10 @@ export class HomeComponent {
       for(let type of this.types){
 
         if (type.name == this.typesInstitution){
+          this.summMin = type.minSum;
+          this.summMax = type.maxSum;
+          this.termMin = type.minTerm;
+          this.termMax = type.maxTerm;
           this.bidToType = type.bid;
         }
 
@@ -120,31 +152,44 @@ export class HomeComponent {
     if (this.sum == undefined){
       return;
     }
-    this.isResult = true;
-    await this.sleep(1);
-    this.viewportScroller.scrollToAnchor(elementId);
 
-    if (this.isTypesInstitut == true){
+    if (this.isTypesInstitut){
 
-      if (this.sum != undefined && this.bidToType != undefined && this.term != undefined){
-        
+      if (this.sum != undefined && this.bidToType != undefined && this.term != undefined && (this.sum >= this.summMin && this.sum <= this.summMax)){
+              
+        this.isResult = true;
+        await this.sleep(1);
+        this.viewportScroller.scrollToAnchor(elementId);
+
         this.overpayment = Math.round(this.sum/100*(this.bidToType/365)*this.term);
+        this.resultSum =  this.sum;
+        this.resultBidToType = this.bidToType;
         this.result = this.sum + this.overpayment;
 
         this.sumDelay = Math.round(this.sum+(this.sum/100*this.bidToType*this.term))
-        console.log(this.sumDelay)
+      }
+      else {
+        this.isResult = false;
       }
     }
 
-    if (this.isTypesInstitut == false){
+    if (!this.isTypesInstitut){
 
-      if (this.sum != undefined && this.bid != undefined && this.term != undefined){
+      if (this.sum != undefined && this.bid != undefined && this.term != undefined && (this.sum >= this.summMin && this.sum <= this.summMax)){
+
+        this.isResult = true;
+        await this.sleep(1);
+        this.viewportScroller.scrollToAnchor(elementId);
 
         this.overpayment = Math.round(this.sum/100*(this.bid/365)*this.term);
-        this.result = this.sum + this.overpayment;
-       
+        this.resultSum =  this.sum;
+        this.resultBid = this.bid;
+        this.result = this.sum + this.overpayment;     
         this.sumDelay = Math.round(this.sum+(this.sum/100*3*this.term))
 
+      }
+      else {
+        this.isResult = false;
       }
     }  
   }

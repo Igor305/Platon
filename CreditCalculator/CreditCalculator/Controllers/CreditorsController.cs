@@ -25,8 +25,16 @@ namespace CreditCalculator.Controllers
             return creditorResponseModel;
         }
 
+        [HttpGet("readTypeCreditor")]
+        public TypeCreditorResponseModel getTypeCreditor([FromQuery] string nameCreditor, [FromQuery] string nameTypeCreditor )
+        {
+            TypeCreditorResponseModel typeCreditorResponseModel = _platonService.readTypeCreditorModel(nameCreditor, nameTypeCreditor);
+
+            return typeCreditorResponseModel;
+        }
+
         [HttpPost]
-        public ResponseModel AddCreditor([FromBody] CreditorModel creditorModel)
+        public ResponseModel addCreditor([FromBody] CreditorModel creditorModel)
         {
             ResponseModel responseModel = _platonService.addCreditor(creditorModel);
 
@@ -34,15 +42,23 @@ namespace CreditCalculator.Controllers
         }
 
         [HttpPost("addTypeCreditor")]
-        public ResponseModel AddTypeCreditor([FromQuery] string nameCreditor, [FromBody] TypeCreditorModel typeCreditorModel)
+        public ResponseModel addTypeCreditor([FromQuery] string nameCreditor, [FromBody] TypeCreditorModel typeCreditorModel)
         {
             ResponseModel responseModel = _platonService.addTypeCreditor(nameCreditor, typeCreditorModel);
 
             return responseModel;
         }
 
+        [HttpPut]
+        public ResponseModel updateTypeCreditor([FromQuery] string nameCreditor, [FromQuery] string nameTypeCreditor, [FromBody] TypeCreditorModel typeCreditorModel)
+        {
+            ResponseModel responseModel = _platonService.updateTypeCreditor(nameCreditor, nameTypeCreditor, typeCreditorModel);
+
+            return responseModel;
+        }
+
         [HttpDelete("delTypeCreditor")]
-        public ResponseModel DelTypeCreditor([FromQuery] string nameCreditor, [FromQuery] string nameTypeCreditor)
+        public ResponseModel delTypeCreditor([FromQuery] string nameCreditor, [FromQuery] string nameTypeCreditor)
         {
             ResponseModel responseModel = _platonService.delTypeCreditor(nameCreditor, nameTypeCreditor);
 
@@ -50,7 +66,7 @@ namespace CreditCalculator.Controllers
         }
 
         [HttpDelete]
-        public ResponseModel DeleteCreditor([FromQuery] string name)
+        public ResponseModel deleteCreditor([FromQuery] string name)
         {
             ResponseModel responseModel = _platonService.deleteCreditor(name);
 

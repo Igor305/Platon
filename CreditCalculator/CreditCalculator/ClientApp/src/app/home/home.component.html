@@ -162,18 +162,6 @@
     </div>
     <div class = "count">
         <div  id ='count' class = "flexCount">
-            <div class="summ">
-                <mat-form-field appearance="fill">
-                    <mat-label>СУМА ПОЗИКИ(ГРН):</mat-label>
-                    <input  type="number" [formControl]="summ" [errorStateMatcher]="matcher" [(ngModel)]='sum' matInput >
-                    <mat-error *ngIf="summ.hasError('required')">
-                        Заповніть поле
-                    </mat-error>
-                    <mat-error *ngIf="summ.hasError('min')">
-                        Значення меньше нуля
-                    </mat-error>
-                </mat-form-field>
-            </div>
             <div class = "institution">
                 <mat-form-field appearance="fill">
                     <mat-label>ВИБІР УСТАНОВИ</mat-label>
@@ -224,7 +212,7 @@
                 <div *ngIf='institut == "Свій вибір"' class="bid">
                     <mat-form-field  appearance="fill">
                         <mat-label>СТАВКА РІЧНИХ %</mat-label>
-                        <input matInput type="number" [formControl]="rate" [errorStateMatcher]="matcher" >
+                        <input matInput [(ngModel)]='bid' type="number" [formControl]="rate" [errorStateMatcher]="matcher" >
                         <mat-error *ngIf="rate.hasError('required')">
                             Заповніть поле
                         </mat-error>
@@ -234,12 +222,29 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="summ">
+                <mat-form-field appearance="fill">
+                    <mat-label>СУМА ПОЗИКИ(ГРН):</mat-label>
+                    <input  type="number" [formControl]="summ" [errorStateMatcher]="matcher" [(ngModel)]='sum' matInput >
+                    <mat-error *ngIf="summ.hasError('required')">
+                        Заповніть поле
+                    </mat-error>
+                    <mat-error *ngIf="summ.hasError('min')">
+                        Значення меньше {{summMin}}
+                    </mat-error>
+                    <mat-error *ngIf="summ.hasError('max')">
+                        Значення більше {{summMax}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
+        <br><br><br>
         <div class = "additionalInfo2">
             ТЕРМІН КРЕДИТУВАННЯ
         </div>
+        <br><br><br>
         <div>
-            <mat-slider [min] = "1" [max] = "365" [(ngModel)]="term"  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
+            <mat-slider [min] = termMin [max] = termMax [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
         </div>
         <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toResult('result')">Розрахувати</button>
         <img src="../../assets/Platon.png" class = "platon">
@@ -251,15 +256,15 @@
         <div class = "flexResult">
             <div class = "summResult">
                 <div class = "resultInfo">СУМА ПОЗИКИ</div>
-                <div class = "resultValue">{{sum}}</div>
+                <div class = "resultValue">{{resultSum}}</div>
             </div>
             <div *ngIf="!isTypesInstitut" class = "bidResult">
                 <div class = "resultInfo">% СТАВКА РІЧНИХ</div>
-                <div class = "resultValue">{{bid}} %</div>
+                <div class = "resultValue">{{resultBid}} %</div>
             </div>
             <div *ngIf="isTypesInstitut" class = "bidResult">
                 <div class = "resultInfo">% СТАВКА РІЧНИХ</div>
-                <div class = "resultValue">{{bidToType}} %</div>
+                <div class = "resultValue">{{resultBidToType}} %</div>
             </div>
             <div class = "totalCostResult">
                 <div class = "resultInfo">ЗАГАЛЬНА ВАРТІСТЬ</div>
