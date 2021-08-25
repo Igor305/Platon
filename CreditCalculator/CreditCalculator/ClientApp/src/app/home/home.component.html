@@ -3,21 +3,23 @@
     <div class = "titleText1">Допомагає легко і швидко розрахувати загальні витрати за сумою кредиту або позики. 
         Це дозволить реально оцінити свої можливості, виконати зобов'язання і погасити борг.</div>
     <div class = "titleText2">Знаючи кілька параметрів кредиту/позики, Ви можете підібрати зручні для вас умови.</div>
-    <button mat-raised-button color="primary" class ="titleButton" (click)="toCount('video')">Перейти до розрахунку</button>
+    <button mat-raised-button color="primary" class ="titleButton" (click)="toCount('video')">ПЕРЕЙТИ ДО РОЗРАХУНКУ</button>
 </div>
 
 <div>
-    <div class = "info1">БОРЖНИКОМ ВВАЖАЄТЬСЯ ОСОБА, ЯКЩО ВОНА НЕ ПРИСТУПИЛА ДО ВИКОНАННЯ ЗОБОВ’ЯЗАННЯ АБО НЕ ВИКОНАЛА ЙОГО У ВИЗНАЧЕНІ ТЕРМІНИ,
-        ВСТАНОВЛЕНІ ДОГОВОРОМ АБО ЗАКОНОМ (Ч.1 СТ.612 ЦИВІЛЬНОГО КОДЕКСУ УКРАЇНИ). 
+    <div class = "info1">Боржником вважається особа, якщо вона не приступила до виконання зобов’язання або не виконала його у визначені терміни,
+        встановлені договором або законом (ч.1 ст.612 Цивільного Кодексу України). 
         <br><br>
-        ОТЖЕ, ДЛЯ НАЛЕЖНОГО ВИКОНАННЯ ЗОБОВ’ЯЗАННЯ НЕОБХІДНО ДОТРИМУВАТИСЬ ВИЗНАЧЕНИХ У ДОГОВОРІ ТЕРМІНІВ, ЗОКРЕМА, ЩОДО СПЛАТИ ВІДСОТКІВ, 
-        А ПРОСТРОЧЕННЯ ВИКОНАННЯ ЗОБОВ’ЯЗАННЯ Є ЙОГО ПОРУШЕННЯМ. НЕЗАЛЕЖНО ВІД ТОГО, ЧИ ДОГОВІР БУВ УКЛАДЕНИЙ ПИСЬМОВО ЧИ ЕЛЕКТРОННО.
+        Отже, для належного виконання зобов’язання необхідно дотримуватись визначених у договорі термінів, зокрема, щодо сплати відсотків, 
+        а прострочення виконання зобов’язання є його порушенням. Незалежно від того, чи договір був укладений письмово чи електронно.
     </div>
     <div *ngIf="isDetail == false">
-        <button mat-raised-button color="primary" class ="detailButton" (click)="toDetail('detail')">Розглянути докладніше</button>
+        <button mat-raised-button color="primary" class ="detailButton" (click)="toDetail('detail')">РОЗГЛЯНУТИ ДОКЛАДНІШЕ</button>
+        <br>
     </div>
     <div *ngIf="isDetail == true">
-        <button mat-raised-button color="primary" class ="detailButton" (click)="toDetailClose('title')">Згорнути детальну інформацію</button>
+        <button mat-raised-button color="primary" class ="detailButton" (click)="toDetailClose('title')">ЗГОРНУТИ ДЕТАЛЬНУ ІНФОРМАЦІЮ</button>
+        <br>
     </div>
 </div>
 
@@ -148,7 +150,8 @@
                 <br>
                 <a href="https://erb.minjust.gov.ua/#/search-debtors" target="_blank">https://erb.minjust.gov.ua/#/search-debtors</a>
             </div>
-            <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toDetailClose('title')">Згорнути детальну інформацію</button>
+            <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toDetailClose('title')">ЗГОРНУТИ ДЕТАЛЬНУ ІНФОРМАЦІЮ</button>
+            <br>
         </div>
     </div>
 </div>
@@ -217,7 +220,7 @@
                             Заповніть поле
                         </mat-error>
                         <mat-error *ngIf="rate.hasError('min')">
-                            Значення меньше нуля
+                            Значення менше нуля
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -230,24 +233,26 @@
                         Заповніть поле
                     </mat-error>
                     <mat-error *ngIf="summ.hasError('min')">
-                        Значення меньше {{summMin}}
+                        Значення менше {{summMin}}. Обмеження визначені типом кредиту.
                     </mat-error>
                     <mat-error *ngIf="summ.hasError('max')">
-                        Значення більше {{summMax}}
+                        Значення більше {{summMax}}. Обмеження визначені типом кредиту.
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
         <br><br><br>
-        <div class = "additionalInfo2">
-            ТЕРМІН КРЕДИТУВАННЯ
+        <div class = "additionalTerm">
+            ТЕРМІН КРЕДИТУВАННЯ (кількість днів)
         </div>
         <br><br><br>
         <div>
             <mat-slider [min] = termMin [max] = termMax [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
         </div>
-        <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toResult('result')">Розрахувати</button>
-        <img src="../../assets/Platon.png" class = "platon">
+        <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toResult('result')">РОЗРАХУВАТИ</button>
+        <div  class ="platonImage">
+            <img src="../../assets/Platon.png" class = "platon">
+        </div>
     </div>
     <div>
         
@@ -281,26 +286,30 @@
             </div>
             <br>
             <div class = "additionalInfo2">
-                ЯК ПРАВИЛО, БАГАТО ХТО НЕ ВСТИГАЄ СВОЄЧАСНО ВНЕСТИ ПЛАТІЖ.
+                Як правило, багато хто не встигає своєчасно внести платіж.
                 <br>
-                В ЦЬОМУ РАЗІ, ЯКЩО ВИ ПРОСТРОЧИЛИ ДАТУ ВИПЛАТИ ХОЧАБ НА ДЕНЬ, ТО ВАМ ПОТРІБНО ПОВЕРНУТИ ВЖЕ НЕ <span class="footerSum">{{sum}}</span>, А <span class="footerSum">{{sumDelay}}</span> ГРН. БУДЬТЕ УВАЖНІ!
+                В цьому разі, якщо ви прострочили дату виплати хоча б на день, то вам потрібно повернути вже не <span class="footerSum">{{sum}}</span>, а <span class="footerSum">{{sumDelay}}</span> грн. Будьте уважні!
             </div>
         </div>
         <div class = "additionalInfo2">
-            У РАЗІ ПРОСРОЧЕННЯ ЧЕРЕЗ ДЕКІЛЬКА ДНІВ ПІСЛЯ РОЗРАХУНКОВОЇ ДАТИ ВИПЛАТИ КРЕДИТУ, ЗАЗНАЧЕНОЇ В ДОГОВОРІ, ВАМ БУДЕ НАРАХОВАНА <span class = "additionalInfo5">ЗБІЛЬШЕНА</span> ПРОЦЕНТНА СТАВКА, ЯКА БУДЕ <span class = "additionalInfo5">НАРАХОВУВАТИСЬ ЩОДЕННО НА ТІЛО КРЕДИТУ.</span>    
+            У разі просрочення через декілька днів після розрахункової дати виплати кредиту, зазначеної в договорі, вам буде нарахована <span class = "additionalInfo5">збільшена</span> процентна ставка, яка буде <span class = "additionalInfo5"> нараховуватись щоденно на тіло кредиту.</span>    
         </div>
         <div class = "additionalInfo2">
-            КАЛЬКУЛЯТОР НЕ Є ПІДСТАВОЮ ДЛЯ ВИКОНАННЯ/НЕВИКОНАННЯ ФІНАНСОВИХ ЗОБОВ’ЯЗАНЬ.
+            Калькулятор не є підставою для виконання/невиконання фінансових зобов’язань.
         </div>
         <div class = "additionalInfo2">
-           РОЗРАХУНКИ ЗДІЙСНЮЮТЬСЯ, ВРАХОВУЮЧИ УЗАГАЛЬНЕНУ ІНФОРМАЦІЮ, ЗІБРАНУ З САЙТІВ МІКРОФІНАНСОВИХ ОРГАНІЗАЦІЙ. <span class = "additionalInfo5">НАГОЛОШУЄМО</span>, ДАНІ МІСТЯТЬ В СОБІ ЛИШ ІНФОРМАЦІЙНИЙ ХАРАКТЕР ТА НЕ ВРАХОВУЮТЬ ІНДИВІДУАЛЬНІ АБО Ж АКЦІЙНІ УМОВИ ВЗАЄМОДІЇ З ФІНАНСОВИМИ УСТАНОВАМИ.
-        </div>     
+            Розрахунки здійснюються, враховуючи узагальнену інформацію, зібрану з сайтів мікрофінансових організацій. <span class = "additionalInfo5">наголошуємо</span>, дані містять в собі лиш інформаційний характер та не враховують індивідуальні або ж акційні умови взаємодії з фінансовими установами.
+        </div> 
         <div class = "footer">
-            <div class = "phone">
+            <div>
+                <a href="tel:0678283570">
+                    <div class = "phone"></div>
+                </a>
             </div>
             <div class = "footerPhone">
-                ВИНИКАЮТЬ ПИТАННЯ? ТЕЛЕФОНУЙ: +38(067)** ** ***
+                Виникають питання? Телефонуй: 0678283570 (Марія)
             </div>
-        </div>        
+        </div>     
+        <br>    
     </div>
 </div>

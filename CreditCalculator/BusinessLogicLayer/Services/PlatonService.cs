@@ -13,6 +13,73 @@ namespace BusinessLogicLayer.Services
         private static List<CreditorModel> creditorModels = new List<CreditorModel>();
         private static string path = "Creditors.txt";
         private static string myChoice = "Свій вибір";
+        private static ulong countVisit = 0;
+        private static ulong countInfo = 0;
+        private static ulong countResult = 0;
+        private static int month = 0;
+        private static ulong countVisitForMonth = 0;
+        private static ulong countInfoForMonth = 0;
+        private static ulong countResultForMonth = 0;
+
+        public void addCountVisit()
+        {
+            if (DateTime.Now.Month != month)
+            {
+                month = DateTime.Now.Month;
+                countVisitForMonth = 0;
+            }
+            countVisit++;
+            countVisitForMonth++;
+            writeInFile();
+        }
+        public void addCountInfo()
+        {
+            if (DateTime.Now.Month != month)
+            {
+                month = DateTime.Now.Month;
+                countInfoForMonth = 0;
+            }
+            countInfo++;
+            countInfoForMonth++;
+            writeInFile();
+        }
+        public void addCountResult()
+        {
+            if (DateTime.Now.Month != month)
+            {
+                month = DateTime.Now.Month;
+                countResultForMonth = 0;
+            }
+            countResult++;
+            countResultForMonth++;
+            writeInFile();
+        }
+
+        public CountersResponseModel getСounters()
+        {
+            CountersResponseModel countersResponseModel = new CountersResponseModel();
+
+            try
+            {
+                countersResponseModel.CountVisit = countVisit;
+                countersResponseModel.CountInfo = countInfo;
+                countersResponseModel.CountResult = countResult;
+
+                countersResponseModel.CountVisitForMonth = countVisitForMonth;
+                countersResponseModel.CountInfoForMonth = countInfoForMonth;
+                countersResponseModel.CountResultForMonth = countResultForMonth;
+
+                countersResponseModel.Status = true;
+                countersResponseModel.Message = "Данні успішно отримані.";
+            }
+            catch (Exception e)
+            {
+                countersResponseModel.Status = false;
+                countersResponseModel.Message = e.Message;
+            }
+
+            return countersResponseModel;
+        }
 
         public CreditorResponseModel getCreditors()
         {
@@ -44,6 +111,35 @@ namespace BusinessLogicLayer.Services
             }
 
             return creditorResponseModel;
+        }
+
+        public ResponseModel renameCreditor(string name, string newName)
+        {
+            ResponseModel responseModel = new ResponseModel();
+
+            try
+            {
+                CreditorModel creditorModel = creditorModels.Find(x => x.Name == name);
+                
+                foreach (CreditorModel creditor in creditorModels)
+                {
+                    if(creditor == creditorModel)
+                    {
+                        creditor.Name = newName;
+                    }
+                }
+                responseModel.Status = true;
+                responseModel.Message = $"Кредитор {name} успішно змінений на {newName}";
+
+                writeInFile();
+            }
+            catch (Exception e)
+            {
+                responseModel.Status = false;
+                responseModel.Message = e.Message;
+            }
+
+            return responseModel;
         }
 
         public ResponseModel addCreditor ( CreditorModel creditorModel )
@@ -262,6 +358,15 @@ namespace BusinessLogicLayer.Services
                 File.Delete(path);
             }
 
+            string counters = $"CountVisitForAllTime:{countVisit}\n" +
+                            $"CountInfoForAllTime:{countInfo}\n" +
+                            $"CountResultForAllTime:{countResult}\n" +
+                            $"CountVisitForMonth:{countVisitForMonth}\n" +
+                            $"CountInfoForMonth:{countInfoForMonth}\n" +
+                            $"CountResultForMonth:{countResultForMonth}\n";
+
+            File.AppendAllText(path, counters);
+
             string text = "";
 
             foreach (CreditorModel creditorModel in creditorModels)
@@ -280,9 +385,10 @@ namespace BusinessLogicLayer.Services
                 }
 
                 text += $"****************************\n";
+           
 
                 File.AppendAllText(path, text);
-            }
+            }         
         }
 
         private void readFromFile()
@@ -296,6 +402,30 @@ namespace BusinessLogicLayer.Services
 
                 foreach (string str in text)
                 {
+                    if (str.Contains("CountVisitForAllTime:"))
+                    {
+                        countVisit = ulong.Parse(str.Substring(21));
+                    }
+                    if (str.Contains("CountInfoForAllTime:"))
+                    {
+                        countInfo = ulong.Parse(str.Substring(20));
+                    }
+                    if (str.Contains("CountResultForAllTime:"))
+                    {
+                        countResult = ulong.Parse(str.Substring(22));
+                    }
+                    if (str.Contains("CountVisitForMonth:"))
+                    {
+                        countVisitForMonth = ulong.Parse(str.Substring(19));
+                    }
+                    if (str.Contains("CountInfoForMonth:"))
+                    {
+                        countInfoForMonth = ulong.Parse(str.Substring(18));
+                    }
+                    if (str.Contains("CountResultForMonth:"))
+                    {
+                        countResultForMonth = ulong.Parse(str.Substring(20));
+                    }
                     if (str.Contains("NameCreditor:"))
                     {
                         creditorModel.Name = str.Substring(13);

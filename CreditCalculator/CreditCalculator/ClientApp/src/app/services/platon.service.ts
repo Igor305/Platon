@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreditorModel } from '../models/creditor.model';
+import { CountersResponseModel } from '../models/response/counters.response.model';
 import { CreditorResponseModel } from '../models/response/creditor.response.model';
 import { ResponseModel } from '../models/response/response.model';
 import { TypeCreditorResponseModel } from '../models/response/type.creditor.response.model';
@@ -20,6 +21,37 @@ export class PlatonService {
     return creditors;
   }
 
+  public async addCountVisit(){
+    
+    await this.http.get('/api/creditors/addCountVisit').toPromise();
+  }
+
+  public async addCountInfo(){
+    
+    await this.http.get('/api/creditors/addCountInfo').toPromise();
+  }
+
+  public async addCountResult(){
+
+    await this.http.get('/api/creditors/addCountResult').toPromise();
+  }
+
+  public async getСounters(){
+    
+    let creditor = await this.http.get<CountersResponseModel>('/api/creditors/getСounters').toPromise();
+
+    return creditor;
+  }
+
+  public async renameCreditor(name: string, newName: string){
+
+    let responseModel : ResponseModel;
+
+    let creditor = await this.http.post<ResponseModel>('/api/creditors/renameCreditor?name=' + name + '&&newName=' + newName, responseModel).toPromise();
+
+    return creditor;
+  }
+
   public async addCreditor(creditorModel: CreditorModel){
 
     let creditor = await this.http.post<ResponseModel>('/api/creditors', creditorModel).toPromise();
@@ -36,7 +68,6 @@ export class PlatonService {
 
   public async readTypeCreditor(nameCreditor: string, nameTypeCreditor: string){
 
-    console.log(nameTypeCreditor);
     let creditor = await this.http.get<TypeCreditorResponseModel>('/api/creditors/readTypeCreditor?nameCreditor=' + nameCreditor + '&&nameTypeCreditor=' + nameTypeCreditor).toPromise();
 
     return creditor;

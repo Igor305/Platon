@@ -1,6 +1,12 @@
+CountVisitForAllTime:235
+CountInfoForAllTime:32
+CountResultForAllTime:53
+CountVisitForMonth:4
+CountInfoForMonth:7
+CountResultForMonth:3
 NameCreditor:Свій вибір
 ****************************
-NameCreditor:MyCredit
+NameCreditor:MyCreditor
 -----------------------------------
 TypeName:30 днів
 TypeMinSum:100

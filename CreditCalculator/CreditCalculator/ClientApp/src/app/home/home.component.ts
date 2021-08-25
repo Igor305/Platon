@@ -66,6 +66,7 @@ export class HomeComponent {
 
   async ngOnInit() {
     await this.getCreditors();
+    await this.platonService.addCountVisit();
     setInterval(() => this.getCreditors(), 1000);
   }
 
@@ -76,6 +77,7 @@ export class HomeComponent {
 
   async toDetail(elementId: string) {
     this.isDetail = true;
+    await this.platonService.addCountInfo();
     await this.sleep(1);
     this.viewportScroller.scrollToAnchor(elementId);
   }
@@ -96,14 +98,16 @@ export class HomeComponent {
 
     for(let institution of this.institutions){
 
-
       if(institution.name == this.institut){
 
         if(institution.name == "Свій вибір"){
+          this.isTypesInstitut = false;
           this.summMin = 1;
           this.summMax = 1000000000;
           this.termMin = 1;
           this.termMax = 365;
+          this.types = [];  
+          this.typesInstitution = "";    
         }
         
         else{
@@ -111,6 +115,13 @@ export class HomeComponent {
           if(institution.typeCreditorModels.length > 1){
             this.isTypesInstitut = true;
             this.types = institution.typeCreditorModels;
+            this.typesInstitution = this.types[0].name;
+
+            this.summMin = institution.typeCreditorModels[0].minSum;
+            this.summMax = institution.typeCreditorModels[0].maxSum;
+            this.termMin = institution.typeCreditorModels[0].minTerm;
+            this.termMax = institution.typeCreditorModels[0].maxTerm;
+            this.bidToType = institution.typeCreditorModels[0].bid;   
           }
           else{
 
@@ -121,20 +132,23 @@ export class HomeComponent {
               this.termMax = type.maxTerm;
               this.bid = type.bid;   
             }
-    
             this.isTypesInstitut = false;
           }
         }
       } 
     }
+    this.term = this.termMin;
+    this.summ.updateValueAndValidity();
   }
 
   async changeTypeInstitut(){  
 
+    this.summ.updateValueAndValidity(); 
+
     if (this.types != undefined){
-
+    
       for(let type of this.types){
-
+        
         if (type.name == this.typesInstitution){
           this.summMin = type.minSum;
           this.summMax = type.maxSum;
@@ -142,9 +156,9 @@ export class HomeComponent {
           this.termMax = type.maxTerm;
           this.bidToType = type.bid;
         }
-
       }
-    }
+    }  
+    this.summ.updateValueAndValidity(); 
   }
 
   async toResult(elementId: string){
@@ -158,6 +172,7 @@ export class HomeComponent {
       if (this.sum != undefined && this.bidToType != undefined && this.term != undefined && (this.sum >= this.summMin && this.sum <= this.summMax)){
               
         this.isResult = true;
+        await this.platonService.addCountResult();
         await this.sleep(1);
         this.viewportScroller.scrollToAnchor(elementId);
 
@@ -166,7 +181,8 @@ export class HomeComponent {
         this.resultBidToType = this.bidToType;
         this.result = this.sum + this.overpayment;
 
-        this.sumDelay = Math.round(this.sum+(this.sum/100*this.bidToType*this.term))
+        this.sumDelay = Math.round(this.sum+(this.sum/100*3*this.term))
+
       }
       else {
         this.isResult = false;
@@ -178,6 +194,7 @@ export class HomeComponent {
       if (this.sum != undefined && this.bid != undefined && this.term != undefined && (this.sum >= this.summMin && this.sum <= this.summMax)){
 
         this.isResult = true;
+        await this.platonService.addCountResult();
         await this.sleep(1);
         this.viewportScroller.scrollToAnchor(elementId);
 

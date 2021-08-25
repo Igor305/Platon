@@ -1,11 +1,54 @@
-<div  class = "title" id ='title'>
+<div  class = "title" id ='title'> 
     <div class ="description"> Режим конфігурації Кредиторів</div>
+    <div class = "flex">
+        <div>
+            <div class ="titleName"> Статистика за весь період</div>
+            <div class ="counter">
+               Кількість візитів на сайт: {{countVisit}} 
+            </div>
+            <div class ="counter">
+                Кількість переглядів юридичної інформації: {{countInfo}} 
+             </div>
+             <div class ="counter">
+                Кількість розрахувань: {{countResult}} 
+             </div>
+        </div>
+        <div>
+            <div class ="titleName"> Статистика за місяць</div>
+            <div class ="counter">
+               Кількість візитів на сайт: {{countVisitForMonth}} 
+            </div>
+            <div class ="counter">
+                Кількість переглядів юридичної інформації: {{countInfoForMonth}} 
+             </div>
+             <div class ="counter">
+                Кількість розрахувань: {{countResultForMonth}} 
+             </div>
+        </div>
+    </div>
     <div>
         <div *ngFor="let cr of creditors" >
             <div *ngIf="cr.name != 'Свій вибір'" class = "creditors">
-                <div class ="nameCreditor">
-                    {{cr.name}}
-                </div>     
+                <div class = "flexPen"> 
+                    <div class ="nameCreditor">
+                        {{cr.name}}
+                    </div>    
+                    <div class = "pen">  
+                        <img src="../../assets/pen.png" alt="" height="20px" width="20px" (click)="openMenuRename(cr.name)">
+                    </div> 
+                </div>
+                <div *ngIf="isRename">
+                    <div *ngIf="nameCreditor == cr.name">
+                        <mat-form-field class="formNameCreditor" appearance="fill">
+                            <mat-label>Змініть назву Кредитору</mat-label>
+                            <input matInput [(ngModel)]="renameCreditor">
+                        </mat-form-field>
+                        <div>
+                            <button mat-raised-button color="primary" class ="buttonRename" (click)="rename(cr.name)">Змінити</button>
+                            <button mat-raised-button color="warn" class ="buttonRename" (click)="openMenuRename(cr.name)">Відмінити</button>
+                        </div>
+                    </div>
+                </div>
                 <div *ngFor="let type of cr.typeCreditorModels" class="typeCreditor">
                     <div class ="flex">
                         <div class ="nameTypeCreditor">
@@ -206,7 +249,7 @@
             <div>
                 <button mat-raised-button color="primary" class ="buttonAddCreditor" (click)="addCreditor()">Додати</button>
             </div>
-        </div>
+        </div>      
     </div>
     <div class = "message">{{message}}</div>
 </div>

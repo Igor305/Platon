@@ -25,6 +25,40 @@ namespace CreditCalculator.Controllers
             return creditorResponseModel;
         }
 
+        [HttpGet("addCountVisit")]
+        public void addCountVisit()
+        {
+            _platonService.addCountVisit();
+        }
+
+        [HttpGet("addCountInfo")]
+        public void addCountInfo()
+        {
+            _platonService.addCountInfo();
+        }
+
+        [HttpGet("addCountResult")]
+        public void addCountResult()
+        {
+            _platonService.addCountResult();
+        }
+
+        [HttpGet("getСounters")]
+        public CountersResponseModel getСounters()
+        {
+            CountersResponseModel countersResponseModel = _platonService.getСounters();
+
+            return countersResponseModel;
+        }
+
+        [HttpPost("renameCreditor")]
+        public ResponseModel renameCreditor(string name, string newName)
+        {
+            ResponseModel responseModel = _platonService.renameCreditor(name, newName);
+
+            return responseModel;
+        }
+
         [HttpGet("readTypeCreditor")]
         public TypeCreditorResponseModel getTypeCreditor([FromQuery] string nameCreditor, [FromQuery] string nameTypeCreditor )
         {

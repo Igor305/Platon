@@ -21,8 +21,18 @@ export class ConfigComponent implements OnInit {
   isCreate: boolean = false;
   isAddType: boolean = false;
   isType : boolean = false;
-  
+  isRename : boolean = false;
+
+  countVisit: number;
+  countInfo: number;
+  countResult: number;
+  countVisitForMonth: number;
+  countInfoForMonth: number;
+  countResultForMonth: number;
+
   message?: string = "";
+
+  renameCreditor?: string;
 
   nameCreditor?: string;
   sumMinCreditor?: number;
@@ -101,21 +111,60 @@ export class ConfigComponent implements OnInit {
 
   async ngOnInit(){
     await this.getCreditors();
+    await this.getСounters();
+  }
+
+  async getСounters (){
+
+    let counters = await this.platonService.getСounters();
+    this.countVisit = counters.countVisit;
+    this.countInfo = counters.countInfo;
+    this.countResult = counters.countResult;
+    this.countVisitForMonth = counters.countVisitForMonth;
+    this.countInfoForMonth = counters.countInfoForMonth;
+    this.countResultForMonth = counters.countResultForMonth;
+  }
+
+
+  async openMenuRename(nameCreditor: string){
+
+    if (!this.isRename){
+      this.isRename = true;  
+      this.renameCreditor = this.nameCreditor = nameCreditor;
+      return;
+    }
+
+    if (this.isRename){
+
+      if(this.nameCreditor == nameCreditor){
+        this.isRename = false; 
+      }
+      this.nameCreditor = nameCreditor;
+      return;
+    }
+  }
+
+  async rename (name: string){
+    
+    let result = await this.platonService.renameCreditor(name, this.renameCreditor);   
+    this.message = result.message; 
+    
+    this.isRename = false;
+    await this.getCreditors();
   }
 
   async getCreditors(){
     this.creditorsModel = await this.platonService.getCreditors();
     this.creditors = this.creditorsModel.creditorModels;
-    console.log(this.creditors);
   }
 
   async openMenuAddCreditor(){
-    if (this.isAdd == false){
+    if (!this.isAdd){
       this.isAdd = true;
       return;
     }
 
-    if (this.isAdd == true){
+    if (this.isAdd){
       this.isAdd = false;
       return;
     }
