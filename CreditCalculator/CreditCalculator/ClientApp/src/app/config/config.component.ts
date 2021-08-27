@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../home/home.component';
@@ -107,7 +108,7 @@ export class ConfigComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(private platonService: PlatonService) { }
+  constructor(private viewportScroller: ViewportScroller, private platonService: PlatonService) { }
 
   async ngOnInit(){
     await this.getCreditors();
@@ -158,9 +159,11 @@ export class ConfigComponent implements OnInit {
     this.creditors = this.creditorsModel.creditorModels;
   }
 
-  async openMenuAddCreditor(){
+  async openMenuAddCreditor(elementId: string){
     if (!this.isAdd){
       this.isAdd = true;
+      await this.sleep(1);
+      this.viewportScroller.scrollToAnchor(elementId);
       return;
     }
 
@@ -459,5 +462,9 @@ export class ConfigComponent implements OnInit {
     else{
       this.isTypeUp = true;
     }
+  }
+  
+  sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

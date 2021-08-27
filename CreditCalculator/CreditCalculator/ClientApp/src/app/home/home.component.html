@@ -138,7 +138,7 @@
                 <br>
             </div>
             <div class = "additionalInfo1">
-                КОРИСТНІ РЕСУРСИ:
+                КОРИСНІ РЕСУРСИ:
             </div>
             <div class = "additionalInfo2">
                 1)	Українське бюро кредитних історій – дає можливість безкоштовно переглянути Вашу кредитну історію: 
@@ -150,6 +150,16 @@
                 <br>
                 <a href="https://erb.minjust.gov.ua/#/search-debtors" target="_blank">https://erb.minjust.gov.ua/#/search-debtors</a>
             </div>
+            <div class = "footer">
+                <div>
+                    <a href="tel:0678283570">
+                        <div class = "phone"></div>
+                    </a>
+                </div>
+                <div class = "footerPhone">
+                    Виникають питання? Телефонуй: 0678283570 (Марія)
+                </div>
+            </div>     
             <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toDetailClose('title')">ЗГОРНУТИ ДЕТАЛЬНУ ІНФОРМАЦІЮ</button>
             <br>
         </div>
@@ -168,19 +178,22 @@
             <div class = "institution">
                 <mat-form-field appearance="fill">
                     <mat-label>ВИБІР УСТАНОВИ</mat-label>
-                    <mat-select [(ngModel)]="institut" (selectionChange)="changeInstitut()" >
+                    <mat-select  [formControl]="creditor" [errorStateMatcher]="matcher" [(ngModel)]="institut" (selectionChange)="changeInstitut()">
                         <mat-option *ngFor="let institution of institutions" [value]="institution.name">
-                        {{institution.name}}
+                            {{institution.name}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="creditor.hasError('required')">
+                        Виберіть установу
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div *ngIf="isTypesInstitut">
                 <mat-form-field appearance="fill">
-                    <mat-label>ВИБІР ТИПУ УСТАНОВИ</mat-label>
+                    <mat-label>ВИБІР ТИПУ КРЕДИТУ</mat-label>
                     <mat-select [(ngModel)]="typesInstitution" (selectionChange)="changeTypeInstitut()">
-                        <mat-option *ngFor="let type of types" [value]="type.name">
-                        {{type.name}}
+                        <mat-option *ngFor="let type of types" [value]="type.name" >
+                            {{type.name}}                      
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -246,16 +259,29 @@
             ТЕРМІН КРЕДИТУВАННЯ (кількість днів)
         </div>
         <br><br><br>
-        <div>
-            <mat-slider [min] = termMin [max] = termMax [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
+        <div *ngIf="termMin != termMax">          
+            <mat-slider [min] = termMin [max] = termMax [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)" ></mat-slider>
         </div>
-        <button mat-raised-button color="primary" class ="detailButtonClose" (click)="toResult('result')">РОЗРАХУВАТИ</button>
+        <div *ngIf="termMin == termMax">     
+            <mat-slider matTooltip="Для обраного типу кредиту доступний лише один термін" matTooltipPosition = "above" [min] = termMin [max] = 0 [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
+        </div>
+        <button mat-raised-button [formControl]="summ" color="primary" class ="detailButtonClose" (click)="toResult('result')">РОЗРАХУВАТИ</button>
         <div  class ="platonImage">
             <img src="../../assets/Platon.png" class = "platon">
         </div>
+        <div *ngIf="!isResult" class = "footer">
+            <div>
+                <a href="tel:0678283570">
+                    <div class = "phone"></div>
+                </a>
+            </div>
+            <div class = "footerPhone">
+                Виникають питання? Телефонуй: 0678283570 (Марія)
+            </div>
+        </div>
+        <br>
     </div>
-    <div>
-        
+    <div>      
     </div>
     <div *ngIf="isResult == true" id = 'result'>
         <div class = "flexResult">
@@ -288,7 +314,7 @@
             <div class = "additionalInfo2">
                 Як правило, багато хто не встигає своєчасно внести платіж.
                 <br>
-                В цьому разі, якщо ви прострочили дату виплати хоча б на день, то вам потрібно повернути вже не <span class="footerSum">{{sum}}</span>, а <span class="footerSum">{{sumDelay}}</span> грн. Будьте уважні!
+                В цьому разі, якщо ви прострочили дату виплати позики, то вам потрібно повернути вже не <span class="footerSum">{{sum}}</span>, а <span class="footerSum">{{sumDelay}}</span> грн. Будьте уважні!
             </div>
         </div>
         <div class = "additionalInfo2">
@@ -298,7 +324,7 @@
             Калькулятор не є підставою для виконання/невиконання фінансових зобов’язань.
         </div>
         <div class = "additionalInfo2">
-            Розрахунки здійснюються, враховуючи узагальнену інформацію, зібрану з сайтів мікрофінансових організацій. <span class = "additionalInfo5">наголошуємо</span>, дані містять в собі лиш інформаційний характер та не враховують індивідуальні або ж акційні умови взаємодії з фінансовими установами.
+            Розрахунки здійснюються, враховуючи узагальнену інформацію, зібрану з сайтів мікрофінансових організацій. <span class = "additionalInfo5">Наголошуємо</span>, дані містять в собі лиш інформаційний характер та не враховують індивідуальні або ж акційні умови взаємодії з фінансовими установами.
         </div> 
         <div class = "footer">
             <div>

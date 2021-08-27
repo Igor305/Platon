@@ -278,6 +278,17 @@ mat-slider
     margin-right: 10%
     width: 80%
 
+::ng-deep 
+  .mat-slider-thumb-label 
+    transform: rotate(45deg) !important
+    border-radius: 50% 50% 0 !important
+  
+  .mat-slider-thumb 
+    transform: scale(0) !important
+  
+  .mat-slider-thumb-label-text 
+    opacity: 1 !important
+  
 ::ng-deep .mat-accent .mat-slider-thumb 
     background-color: $color-yellow
 
@@ -287,15 +298,26 @@ mat-slider
 ::ng-deep .mat-accent .mat-slider-track-fill 
     background-color: $color-yellow
 
-::ng-deep .mat-slider-wrapper 
+::ng-deep .mat-slider-wrapper .mat-slider-thumb-container .mat-slider-thumb-label 
+    background-color: $color-yellow
+    width: 50px
+    height: 50px
+    top: -62px
+    right: -25px
+        
+::ng-deep .mat-slider-min-value 
+    &.mat-slider-thumb-label-showing 
+        &.cdk-focused
+            .mat-slider-thumb,
+            .mat-slider-thumb-label
+                background-color: $color-yellow
 
-  .mat-slider-thumb-container 
-    .mat-slider-thumb-label 
-        width: 50px
-        height: 50px
-        top: -62px
-        right: -25px
+::ng-deep .mat-slider-wrapper .mat-slider-thumb-container .mat-slider-thumb-label-text
+    font-size: 18px
 
+::ng-deep .mat-tooltip
+    font-size: 12px 
+    
 @media screen and ( max-width: 1400px )
     .titleName
         font-size: 56px

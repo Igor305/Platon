@@ -23,33 +23,18 @@ namespace BusinessLogicLayer.Services
 
         public void addCountVisit()
         {
-            if (DateTime.Now.Month != month)
-            {
-                month = DateTime.Now.Month;
-                countVisitForMonth = 0;
-            }
             countVisit++;
             countVisitForMonth++;
             writeInFile();
         }
         public void addCountInfo()
         {
-            if (DateTime.Now.Month != month)
-            {
-                month = DateTime.Now.Month;
-                countInfoForMonth = 0;
-            }
             countInfo++;
             countInfoForMonth++;
             writeInFile();
         }
         public void addCountResult()
         {
-            if (DateTime.Now.Month != month)
-            {
-                month = DateTime.Now.Month;
-                countResultForMonth = 0;
-            }
             countResult++;
             countResultForMonth++;
             writeInFile();
@@ -60,7 +45,7 @@ namespace BusinessLogicLayer.Services
             CountersResponseModel countersResponseModel = new CountersResponseModel();
 
             try
-            {
+            {              
                 countersResponseModel.CountVisit = countVisit;
                 countersResponseModel.CountInfo = countInfo;
                 countersResponseModel.CountResult = countResult;
@@ -353,6 +338,14 @@ namespace BusinessLogicLayer.Services
 
         private void writeInFile()
         {
+            if (DateTime.Now.Month != month)
+            {
+                month = DateTime.Now.Month;
+                countVisitForMonth = 0;
+                countInfoForMonth = 0;
+                countResultForMonth = 0;
+            }
+
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -363,7 +356,8 @@ namespace BusinessLogicLayer.Services
                             $"CountResultForAllTime:{countResult}\n" +
                             $"CountVisitForMonth:{countVisitForMonth}\n" +
                             $"CountInfoForMonth:{countInfoForMonth}\n" +
-                            $"CountResultForMonth:{countResultForMonth}\n";
+                            $"CountResultForMonth:{countResultForMonth}\n" +
+                            $"NowMonth:{month}\n";
 
             File.AppendAllText(path, counters);
 
@@ -386,7 +380,6 @@ namespace BusinessLogicLayer.Services
 
                 text += $"****************************\n";
            
-
                 File.AppendAllText(path, text);
             }         
         }
@@ -425,6 +418,10 @@ namespace BusinessLogicLayer.Services
                     if (str.Contains("CountResultForMonth:"))
                     {
                         countResultForMonth = ulong.Parse(str.Substring(20));
+                    }
+                    if (str.Contains("NowMonth:"))
+                    {
+                        month = int.Parse(str.Substring(9));
                     }
                     if (str.Contains("NameCreditor:"))
                     {

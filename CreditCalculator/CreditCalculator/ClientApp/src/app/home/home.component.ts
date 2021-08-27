@@ -49,6 +49,10 @@ export class HomeComponent {
   types?: TypeCreditorModel[] = [];
   institutions: CreditorModel[] = []
 
+  creditor = new FormControl('', [
+    Validators.required
+  ]);
+
   summ = new FormControl('', [
     Validators.required,
     (control: AbstractControl) => Validators.min(this.summMin)(control),
@@ -67,7 +71,7 @@ export class HomeComponent {
   async ngOnInit() {
     await this.getCreditors();
     await this.platonService.addCountVisit();
-    setInterval(() => this.getCreditors(), 1000);
+    setInterval(() => this.getCreditors(), 5000);
   }
 
   async getCreditors(){
@@ -137,7 +141,13 @@ export class HomeComponent {
         }
       } 
     }
-    this.term = this.termMin;
+    if(this.termMin != this.termMax){
+      this.term = this.termMin;
+    }
+
+    if(this.termMin == this.termMax){
+      this.term = this.termMin;
+    }
     this.summ.updateValueAndValidity();
   }
 
@@ -155,6 +165,15 @@ export class HomeComponent {
           this.termMin = type.minTerm;
           this.termMax = type.maxTerm;
           this.bidToType = type.bid;
+
+          if(this.termMin != this.termMax){
+            this.term = this.termMin;
+          }
+
+          if(this.termMin == this.termMax){
+            this.term = this.termMin;
+          }
+          console.log(this.term)
         }
       }
     }  
@@ -163,7 +182,10 @@ export class HomeComponent {
 
   async toResult(elementId: string){
 
-    if (this.sum == undefined){
+    this.creditor.markAsTouched();
+    this.summ.markAsTouched();
+
+    if (this.sum == undefined){    
       return;
     }
 
