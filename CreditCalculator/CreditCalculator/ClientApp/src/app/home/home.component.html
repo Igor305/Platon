@@ -263,7 +263,7 @@
             <mat-slider [min] = termMin [max] = termMax [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)" ></mat-slider>
         </div>
         <div *ngIf="termMin == termMax">     
-            <mat-slider matTooltip="Для обраного типу кредиту доступний лише один термін" matTooltipPosition = "above" [min] = termMin [max] = 0 [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
+            <mat-slider matTooltip="Для обраного типу кредиту доступний лише один термін" matTooltipPosition = "above" [min] = termMin [max] = termMax  [(ngModel)]='term'  [thumbLabel]= true aria-label="unit(s)"></mat-slider>
         </div>
         <button mat-raised-button [formControl]="summ" color="primary" class ="detailButtonClose" (click)="toResult('result')">РОЗРАХУВАТИ</button>
         <div  class ="platonImage">

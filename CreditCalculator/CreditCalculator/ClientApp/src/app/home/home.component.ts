@@ -141,13 +141,19 @@ export class HomeComponent {
         }
       } 
     }
+    
     if(this.termMin != this.termMax){
       this.term = this.termMin;
     }
 
     if(this.termMin == this.termMax){
-      this.term = this.termMin;
+      let term = this.termMin;
+      
+      this.termMin = this.term = this.termMax = 0;
+      await this.sleep(1);
+      this.termMin = this.term = this.termMax = term;
     }
+
     this.summ.updateValueAndValidity();
   }
 
@@ -171,9 +177,13 @@ export class HomeComponent {
           }
 
           if(this.termMin == this.termMax){
-            this.term = this.termMin;
+            let term = this.termMin;
+
+            this.termMin = this.term = this.termMax = 0;
+            await this.sleep(1);
+            this.termMin = this.term = this.termMax = term;
           }
-          console.log(this.term)
+
         }
       }
     }  

@@ -1,9 +1,9 @@
-CountVisitForAllTime:405
-CountInfoForAllTime:44
-CountResultForAllTime:77
-CountVisitForMonth:125
-CountInfoForMonth:7
-CountResultForMonth:14
+CountVisitForAllTime:446
+CountInfoForAllTime:46
+CountResultForAllTime:79
+CountVisitForMonth:166
+CountInfoForMonth:9
+CountResultForMonth:16
 NowMonth:8
 NameCreditor:Свій вибір
 ****************************
